@@ -2,6 +2,9 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:q_flow_company/model/enum/company_size.dart';
+import 'package:q_flow_company/reusable_components/button/date_btn_view.dart';
+import 'package:q_flow_company/reusable_components/custom_dropdown_view.dart';
 
 import 'package:q_flow_company/theme_data/extensions/text_style_ext.dart';
 import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
@@ -55,6 +58,67 @@ class EditDetailsScreen extends StatelessWidget {
                       borderRadius: 40,
                       min: 4,
                       max: 6,
+                    ),
+                    Stack(
+                      alignment: Alignment.centerRight,
+                      children: [
+                        CustomTextField(
+                            hintText: 'Company Size',
+                            readOnly: true,
+                            controller: TextEditingController(),
+                            validation: Validations.none),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              BlocBuilder<EditDetailsCubit, EditDetailsState>(
+                                builder: (context, state) {
+                                  return CustomDropdown(
+                                    selectedValue: cubit.companySize.value,
+                                    onChanged: (String? newValue) {
+                                      if (newValue != null) {
+                                        cubit.setSize(
+                                            CompanySizeExtension.fromString(
+                                                newValue));
+                                      }
+                                    },
+                                    dropdownItems: CompanySize.values
+                                        .map((e) => e.value)
+                                        .toList(),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    Stack(
+                      alignment: Alignment.centerRight,
+                      children: [
+                        CustomTextField(
+                            hintText: 'Established Year',
+                            readOnly: true,
+                            controller: TextEditingController(),
+                            validation: Validations.none),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              BlocBuilder<EditDetailsCubit, EditDetailsState>(
+                                builder: (context, state) {
+                                  return DateBtnView(
+                                      date: cubit.StartDate,
+                                      callback: (date) =>
+                                          cubit.updateStartDate(date));
+                                },
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
                     CustomTextField(
                         suffixIcon: const Padding(

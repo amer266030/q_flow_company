@@ -23,15 +23,16 @@ extension NetworkFunctions on AuthCubit {
         emailController.text,
         stringOtp,
       );
+
       // var company = Company(id: "65adde75-c711-4298-8045-4bda88ed9225");
       // bool companyExists = await SupabaseCompany.doesCompanyExist(company);
-      emitUpdate();
+
       if (context.mounted) {
-        //  if (companyExists) {
+        print('Navigating to Home');
         navigateToHome(context);
-        // } else {
         //   navigateToEditDetails(context);
-        // }
+      } else {
+        print('context not mounted!');
       }
     } catch (e) {
       emitError('Could not verify OTP');

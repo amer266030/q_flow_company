@@ -16,6 +16,7 @@ class OtpFormView extends StatelessWidget {
   final Function(int) verifyOTP;
   @override
   Widget build(BuildContext context) {
+    int enteredOtp = -1;
     final defaultPinTheme = PinTheme(
       textStyle: TextStyle(
           fontSize: 24, color: context.textColor1, fontWeight: FontWeight.w600),
@@ -48,7 +49,7 @@ class OtpFormView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PageHeaderView(title: 'Verify your email'),
+          const PageHeaderView(title: 'Verify your email'),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 24),
             child: Column(
@@ -56,9 +57,7 @@ class OtpFormView extends StatelessWidget {
                 Text('An OTP verification code was sent to',
                     style: context.bodyLarge),
                 Text(email, style: context.bodyMedium),
-                SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
@@ -68,14 +67,16 @@ class OtpFormView extends StatelessWidget {
                 child: AspectRatio(
                   aspectRatio: 7,
                   child: Pinput(
-                    
                     defaultPinTheme: defaultPinTheme,
                     focusedPinTheme: focusedPinTheme,
                     submittedPinTheme: submittedPinTheme,
                     length: 6,
                     showCursor: true,
-                    onCompleted: (pin) => verifyOTP(int.tryParse(pin) ?? -1),
-                   
+                    onChanged: (pin) => enteredOtp = int.tryParse(pin) ?? -1,
+                    onCompleted: (pin) {
+                      enteredOtp = int.tryParse(pin) ?? -1;
+                      verifyOTP(enteredOtp);
+                    },
                   ),
                 ),
               ),
@@ -98,7 +99,7 @@ class OtpFormView extends StatelessWidget {
             children: [
               Expanded(
                   child: PrimaryBtn(
-                      title: 'Verify', callback: () => verifyOTP(-1))),
+                      title: 'Verify', callback: () => verifyOTP(enteredOtp))),
             ],
           )
         ],

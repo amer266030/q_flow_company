@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:q_flow_company/model/enum/company_size.dart';
-import 'package:q_flow_company/model/user/company.dart';
 
 import '../position_opening/position_opening_screen.dart';
 
@@ -18,7 +17,7 @@ class EditDetailsCubit extends Cubit<EditDetailsState> {
   final linkedInController = TextEditingController();
   final websiteController = TextEditingController();
   final xController = TextEditingController();
-  DateTime StartDate = DateTime.now();
+  DateTime startDate = DateTime.now();
 
   var companySize = CompanySize.zeroTo50;
 
@@ -41,7 +40,7 @@ class EditDetailsCubit extends Cubit<EditDetailsState> {
           builder: (context) => const PositionOpeningScreen()));
 
   updateStartDate(DateTime date) {
-    StartDate = date;
+    startDate = date;
     emitUpdate();
   }
 

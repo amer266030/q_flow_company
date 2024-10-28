@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:q_flow_company/model/enum/company_size.dart';
 import 'package:q_flow_company/reusable_components/button/date_btn_view.dart';
 import 'package:q_flow_company/reusable_components/custom_dropdown_view.dart';
+import 'package:q_flow_company/screens/edit_details/network_functions.dart';
 
 import 'package:q_flow_company/theme_data/extensions/text_style_ext.dart';
 import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
@@ -100,7 +101,8 @@ class EditDetailsScreen extends StatelessWidget {
                         CustomTextField(
                             hintText: 'Established Year',
                             readOnly: true,
-                            controller: TextEditingController(),
+                            controller: TextEditingController(
+                                text: cubit.startDate.year.toString()),
                             validation: Validations.none),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -110,7 +112,7 @@ class EditDetailsScreen extends StatelessWidget {
                               BlocBuilder<EditDetailsCubit, EditDetailsState>(
                                 builder: (context, state) {
                                   return DateBtnView(
-                                      date: cubit.StartDate,
+                                      date: cubit.startDate,
                                       callback: (date) =>
                                           cubit.updateStartDate(date));
                                 },
@@ -148,10 +150,18 @@ class EditDetailsScreen extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: PrimaryBtn(
-                              callback: () =>
-                                  cubit.navigateToPositionOpening(context),
-                              title: 'Next'),
+                          child:
+                              BlocBuilder<EditDetailsCubit, EditDetailsState>(
+                            builder: (context, state) {
+                              return PrimaryBtn(
+                                  callback: () => {
+                                        cubit.createNewCompany(context),
+                                        // cubit
+                                        //     .navigateToPositionOpening(context),
+                                      },
+                                  title: 'Next');
+                            },
+                          ),
                         ),
                       ],
                     )

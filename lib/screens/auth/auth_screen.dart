@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:q_flow_company/reusable_components/dialog/error_dialog.dart';
+import 'package:q_flow_company/reusable_components/dialog/loading_dialog.dart';
+import 'package:q_flow_company/screens/auth/network_functions.dart';
+import 'package:q_flow_company/screens/auth/subviews/login_form_view.dart';
+import 'package:q_flow_company/screens/auth/subviews/otp_form_view.dart';
 import '../../extensions/img_ext.dart';
-import '../../reusable_components/button/primary_btn.dart';
-import '../../reusable_components/custom_text_field.dart';
-import '../../reusable_components/page_header_view.dart';
-import '../../utils/validations.dart';
 import 'auth_cubit.dart';
 
 class AuthScreen extends StatelessWidget {
@@ -17,63 +17,59 @@ class AuthScreen extends StatelessWidget {
       create: (context) => AuthCubit(),
       child: Builder(builder: (context) {
         final cubit = context.read<AuthCubit>();
-        return Scaffold(
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(4),
-                    child: ClipOval(
-                        child: AspectRatio(
-                      aspectRatio: 2.3,
-                      child: Image(
-                        image: Img.logo,
-                      ),
-                    )),
-                  ),
-                  const PageHeaderView(title: 'Login'),
-                  Expanded(
-                    child: ListView(
-                      children: [
-                        _FormView(cubit: cubit),
-                      ],
+        return BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) async {
+            if (cubit.previousState is LoadingState &&
+                Navigator.canPop(context)) {
+              Navigator.of(context)
+                  .pop(); 
+            }
+
+            if (state is LoadingState && cubit.previousState is! LoadingState) {
+              showLoadingDialog(context);
+            }
+
+            if (state is ErrorState) {
+              showErrorDialog(context, state.msg);
+            }
+          },
+          child: GestureDetector(
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: Scaffold(
+              body: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: ListView(children: [
+                    Padding(
+                      padding: EdgeInsets.all(4),
+                      child: ClipOval(
+                          child: AspectRatio(
+                        aspectRatio: 2.3,
+                        child: Image(
+                          image: Img.logo,
+                        ),
+                      )),
                     ),
-                  ),
-                ],
+                    BlocBuilder<AuthCubit, AuthState>(
+                      builder: (context, state) {
+                        return cubit.isOtp
+                            ? OtpFormView(
+                                email: cubit.emailController.text,
+                                goBack: cubit.toggleIsOtp,
+                                verifyOTP: (otp) =>
+                                    cubit.verifyOTP(context, otp))
+                            : LoginFormView(
+                                callback: () => cubit.sendOTP(context),
+                                controller: cubit.emailController);
+                      },
+                    )
+                  ]),
+                ),
               ),
             ),
           ),
         );
       }),
-    );
-  }
-}
-
-class _FormView extends StatelessWidget {
-  const _FormView({required this.cubit});
-  final AuthCubit cubit;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        CustomTextField(
-            hintText: 'Email',
-            controller: TextEditingController(),
-            validation: Validations.email),
-        const SizedBox(height: 32),
-        Row(
-          children: [
-            Expanded(
-                child: PrimaryBtn(
-                    callback: () => cubit.navigate(context), title: 'Start'))
-          ],
-        ),
-      ],
     );
   }
 }

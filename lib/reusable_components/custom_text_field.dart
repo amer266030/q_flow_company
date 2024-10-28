@@ -17,6 +17,7 @@ class CustomTextField extends StatelessWidget {
     this.readOnly = false,
     this.isObscure = false,
     this.borderRadius,
+    this.keyboardType = TextInputType.text,
   });
   final String hintText;
   final Widget? prefixIcon;
@@ -27,6 +28,8 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final Function(String value) validation;
   final bool readOnly;
+  final TextInputType keyboardType;
+
   final bool isObscure;
   final Function(String)? onChanged;
   @override
@@ -41,6 +44,7 @@ class CustomTextField extends StatelessWidget {
         // obscureText: ,
         onChanged: onChanged,
         minLines: min ?? 1,
+        keyboardType: keyboardType,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: controller,
         textCapitalization: TextCapitalization.none,

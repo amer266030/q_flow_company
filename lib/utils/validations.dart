@@ -2,10 +2,10 @@ class Validations {
   static String? name(String value) {
     final regex = RegExp(r'^[a-zA-Z\s]+$');
     if (regex.hasMatch(value) || value.isEmpty) {
-      // Valid email address
       return null;
+    } else if (!regex.hasMatch(value)) {
+      return 'Invalid name format';
     } else {
-      // Invalid email address
       return 'This Field Cannot be Empty';
     }
   }

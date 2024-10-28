@@ -4,7 +4,6 @@ import 'package:q_flow_company/extensions/date_ext.dart';
 import 'package:q_flow_company/theme_data/extensions/text_style_ext.dart';
 import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
 
-
 class DateBtnView extends StatelessWidget {
   const DateBtnView({super.key, required this.date, required this.callback});
   final DateTime date;
@@ -22,6 +21,7 @@ class DateBtnView extends StatelessWidget {
           initialDate: date,
           firstDate: DateTime(1970),
           lastDate: DateTime.now(),
+          initialDatePickerMode: DatePickerMode.year,
           builder: (context, child) {
             ThemeData datePickerTheme;
             if (brightness == Brightness.light) {

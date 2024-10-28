@@ -1,7 +1,7 @@
 import '../enum/company_size.dart';
 
 class Company {
-  String? id; // References user_id
+  String? id; 
   String? name;
   String? description;
   CompanySize? companySize;
@@ -26,7 +26,6 @@ class Company {
       id: json['id'] as String?,
       name: json['name'] as String?,
       description: json['description'] as String?,
-      // Convert the string representation of company size into enum
       companySize: json['company_size'] != null
           ? CompanySizeExtension.fromString(json['company_size'] as String?)
           : null,
@@ -39,7 +38,6 @@ class Company {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'name': name,
       'description': description,
       'company_size': companySize?.value,

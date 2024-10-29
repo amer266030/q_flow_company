@@ -16,6 +16,7 @@ class DrawerCubit extends Cubit<DrawerState> {
   bool isDarkMode = true;
   bool isEnglish = false;
 
+
   navigateToEditDetails(BuildContext context) {
     Navigator.of(context)
         .push(MaterialPageRoute(

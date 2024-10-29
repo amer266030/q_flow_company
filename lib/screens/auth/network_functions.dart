@@ -34,9 +34,7 @@ extension NetworkFunctions on AuthCubit {
         } else {
           navigateToEditDetails(context);
         }
-      } else {
-        navigateToEditDetails(context);
-      }
+      } 
     } catch (e) {
       emitError('Could not verify OTP');
     }

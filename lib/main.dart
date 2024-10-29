@@ -5,6 +5,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:q_flow_company/screens/auth/auth_screen.dart';
 import 'package:q_flow_company/screens/edit_details/edit_details_screen.dart';
 import 'package:q_flow_company/screens/home/home_screen.dart';
+import 'package:q_flow_company/screens/onboarding/onboarding_screen.dart';
+import 'package:q_flow_company/services/di_container.dart';
 import 'package:q_flow_company/supabase/supabase_mgr.dart';
 import 'package:q_flow_company/theme_data/app_theme_cubit.dart';
 import 'package:q_flow_company/theme_data/app_themes.dart';
@@ -14,6 +16,7 @@ void main() async {
   await dotenv.load(fileName: ".env");
   await SupabaseMgr.shared.initialize();
   await EasyLocalization.ensureInitialized();
+  await DIContainer.setup();
   runApp(EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],
       path: 'assets/translations',
@@ -38,7 +41,7 @@ class MainApp extends StatelessWidget {
               locale: context.locale,
               supportedLocales: context.supportedLocales,
               localizationsDelegates: context.localizationDelegates,
-              home: const AuthScreen());
+              home: const OnboardingScreen());
         },
       ),
     );

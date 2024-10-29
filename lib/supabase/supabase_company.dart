@@ -1,21 +1,26 @@
 import 'dart:io';
 
+import 'package:get_it/get_it.dart';
+import 'package:q_flow_company/mangers/data_mgr.dart';
 import 'package:q_flow_company/model/user/company.dart';
 import 'package:q_flow_company/supabase/supabase_mgr.dart';
 import 'package:q_flow_company/utils/img_converter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseCompany {
-  static final SupabaseClient supabase = SupabaseMgr.shared.supabase;
-  static final String tableKey = 'company';
-  static final String bucketKey = "company_logo";
-  static Future<List<Company>>? fetchCompany() async {
+  static var supabase = SupabaseMgr.shared.supabase;
+  static const String tableKey = 'company';
+  static const String bucketKey = "company_logo";
+
+  static Future<Company>? fetchCompany() async {
+    var companyId = supabase.auth.currentUser?.id ?? '';
     try {
-      var res = await supabase.from(tableKey).select();
-      List<Company> companies = (res as List)
-          .map((company) => Company.fromJson(company as Map<String, dynamic>))
-          .toList();
-      return companies;
+      var result =
+          await supabase.from(tableKey).select().eq('id', companyId).single();
+      var company = Company.fromJson(result);
+      var dataMgr = GetIt.I.get<DataMgr>();
+      dataMgr.saveCompanyData(company: company);
+      return company;
     } on AuthException catch (_) {
       rethrow;
     } on PostgrestException catch (_) {
@@ -46,12 +51,12 @@ class SupabaseCompany {
     }
   }
 
-  static Future updateCompany( {required Company company,
+  static Future updateCompany(
+      {required Company company,
       required String companyId,
       required File? imageFile}) async {
-        
     try {
-       if (imageFile != null) {
+      if (imageFile != null) {
         company.logoUrl = await uploadLogo(imageFile, company.name ?? '1234');
       }
       final response = await supabase
@@ -87,6 +92,4 @@ class SupabaseCompany {
       rethrow;
     }
   }
-
- 
 }

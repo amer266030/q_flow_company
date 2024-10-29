@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
 import 'package:q_flow_company/model/user/company.dart';
-import 'package:q_flow_company/screens/auth/network_functions.dart';
 import 'package:q_flow_company/screens/edit_details/edit_details_screen.dart';
 
 import '../home/home_screen.dart';

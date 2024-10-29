@@ -19,8 +19,7 @@ extension NetworkFunctions on EditDetailsCubit {
         company: company,
         logoFile: logo,
       );
-      await Future.delayed(Duration(milliseconds: 50));
-      Navigator.of(context).pop();
+      navigateToPositionOpening(context);
     } catch (e) {
       emitError('Could not create company!\nPlease try again later.');
     }

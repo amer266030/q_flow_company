@@ -196,8 +196,6 @@ class EditDetailsScreen extends StatelessWidget {
                                                             ?.id ??
                                                         '')
                                               },
-                                            cubit.navigateToPositionOpening(
-                                                context),
                                           },
                                       title: 'Next');
                                 },

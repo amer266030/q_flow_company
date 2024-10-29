@@ -16,7 +16,7 @@ class EditDetailsCubit extends Cubit<EditDetailsState> {
   EditDetailsCubit(Company? company) : super(EditDetailsInitial()) {
     initialLoad(company);
   }
-  var companyId = Uuid().v4().toString();
+  var companyId = const Uuid().v4().toString();
 
   File? logo;
   final nameController = TextEditingController();

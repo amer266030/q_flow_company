@@ -24,17 +24,8 @@ extension NetworkFunctions on AuthCubit {
         emailController.text,
         stringOtp,
       );
-      if (company != null) {
-        Company companyToCheck =
-            Company(id: SupabaseMgr.shared.supabase.auth.currentUser?.id);
-        bool exists = await SupabaseCompany.doesCompanyExist(companyToCheck);
 
-        if (exists) {
-          navigateToHome(context);
-        } else {
-          navigateToEditDetails(context);
-        }
-      } 
+      navigateToHome(context);
     } catch (e) {
       emitError('Could not verify OTP');
     }

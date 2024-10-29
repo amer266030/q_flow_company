@@ -20,7 +20,7 @@ class AuthCubit extends Cubit<AuthState> {
   navigateToEditDetails(BuildContext context) =>
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => const EditDetailsScreen(
-                isInitialSetup: false,
+                isInitialSetup: true,
               )));
 
   navigateToHome(BuildContext context) => Navigator.of(context).pushReplacement(

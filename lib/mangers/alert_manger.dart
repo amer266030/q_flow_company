@@ -47,7 +47,7 @@ class AlertManager {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return CustomAlert(
+            return CustomAlert(    
           title: title,
           secondaryBtnText: secondaryBtnText,
           primaryBtnText: primaryBtnText,

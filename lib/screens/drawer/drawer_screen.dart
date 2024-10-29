@@ -45,7 +45,7 @@ class DrawerScreen extends StatelessWidget {
                 const SizedBox(height: 8),
                 Align(
                   alignment: Alignment.center,
-                  child: Text('SADIA',
+                  child: Text(cubit.dataMgr.company?.name ?? '',
                       style: TextStyle(
                           fontSize: context.titleMedium.fontSize,
                           fontWeight: context.titleLarge.fontWeight)),
@@ -112,7 +112,10 @@ class DrawerScreen extends StatelessWidget {
                 ToggleListItem(
                     title: 'Theme Mode',
                     value: cubit.isDarkMode,
-                    iconItems: const [CupertinoIcons.sun_max, CupertinoIcons.moon],
+                    iconItems: const [
+                      CupertinoIcons.sun_max,
+                      CupertinoIcons.moon
+                    ],
                     callback: () => cubit.toggleDarkMode(context)),
                 DrawerItemView(
                     title: 'Logout', onTap: () => cubit.logout(context)),

@@ -194,7 +194,7 @@ class EditDetailsScreen extends StatelessWidget {
                                                             .auth
                                                             .currentUser
                                                             ?.id ??
-                                                        '')
+                                                        '123')
                                               },
                                           },
                                       title: 'Next');

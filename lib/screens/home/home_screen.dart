@@ -1,5 +1,4 @@
 import 'package:card_swiper/card_swiper.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:q_flow_company/extensions/screen_size.dart';
@@ -8,7 +7,6 @@ import 'package:q_flow_company/screens/home/subviews/app_bar_view.dart';
 import 'package:q_flow_company/screens/home/subviews/filter_item_view.dart';
 import 'package:q_flow_company/theme_data/extensions/text_style_ext.dart';
 import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
-
 import '../../model/enum/events.dart';
 import '../../model/enum/visitor_status.dart';
 import '../../reusable_components/button/expanded_toggle_buttons.dart';
@@ -29,7 +27,7 @@ class HomeScreen extends StatelessWidget {
         final cubit = context.read<HomeCubit>();
         return Scaffold(
           appBar: AppBarView(
-            companyName: cubit.company?.name ?? '',
+            companyName: cubit.dataMgr.company?.name ?? '',
           ),
           drawer: const DrawerScreen(),
           body: SafeArea(

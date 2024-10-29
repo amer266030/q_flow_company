@@ -19,6 +19,7 @@ extension NetworkFunctions on EditDetailsCubit {
         company: company,
         logoFile: logo,
       );
+      dataMgr.saveCompanyData(company: company);
       navigateToPositionOpening(context);
     } catch (e) {
       emitError('Could not create company!\nPlease try again later.');
@@ -37,6 +38,7 @@ extension NetworkFunctions on EditDetailsCubit {
       await SupabaseCompany.updateCompany(
           imageFile: logo, company: company, companyId: companyId);
       if (context.mounted) navigateToPositionOpening(context);
+       dataMgr.saveCompanyData(company: company);
     } catch (e) {
       emitError(
           'Could not update event!\nPlease try again later.\n${e.toString()}');

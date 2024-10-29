@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:q_flow_company/mangers/data_mgr.dart';
 import 'package:q_flow_company/model/enum/queue_status.dart';
 import 'package:q_flow_company/model/user/company.dart';
 
@@ -13,7 +15,7 @@ part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial()) {
-    filterVisitors();
+    initialLoad();
   }
   Company? company;
   List<Visitor> filteredVisitors = [];
@@ -21,6 +23,7 @@ class HomeCubit extends Cubit<HomeState> {
   QueueStatus selectedQueueStatus = QueueStatus.close;
 
   Events? selectedEvent = Events.jobFair111;
+  var dataMgr = GetIt.I.get<DataMgr>();
 
   bool isOpenApplying = false;
   double queueLimit = 10;
@@ -28,7 +31,6 @@ class HomeCubit extends Cubit<HomeState> {
   List<Visitor> visitor = [];
 
   initialLoad() {
-    // TODO:- get Queue Status
     filterVisitors();
   }
 
@@ -60,8 +62,7 @@ class HomeCubit extends Cubit<HomeState> {
   navigateToVisitorDetails(BuildContext context) => Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => const VisitorDetailsScreen()));
 
-   emitUpdate() => emit(UpdateUIState());
+  emitUpdate() => emit(UpdateUIState());
   emitError(String msg) => emit(ErrorState(msg));
-    emitLoading() => emit(LoadingState());
-
+  emitLoading() => emit(LoadingState());
 }

@@ -181,16 +181,11 @@ class EditDetailsScreen extends StatelessWidget {
                                   EditDetailsState>(
                                 builder: (context, state) {
                                   return PrimaryBtn(
-                                      callback: () => {
-                                            cubit.updateCompany(
-                                              context,
-                                              SupabaseMgr.shared.supabase.auth
-                                                      .currentUser?.id ??
-                                                  '',
-                                            ),
-                                            cubit.navigateToPositionOpening(
-                                                context),
-                                          },
+                                      callback: () => cubit.updateCompany(
+                                          context,
+                                          SupabaseMgr.shared.supabase.auth
+                                                  .currentUser?.id ??
+                                              ''),
                                       title: 'Next');
                                 },
                               ),

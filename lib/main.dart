@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:q_flow_company/screens/auth/auth_screen.dart';
+import 'package:q_flow_company/screens/edit_details/edit_details_screen.dart';
 import 'package:q_flow_company/screens/home/home_screen.dart';
 import 'package:q_flow_company/supabase/supabase_mgr.dart';
 import 'package:q_flow_company/theme_data/app_theme_cubit.dart';
@@ -37,7 +38,7 @@ class MainApp extends StatelessWidget {
               locale: context.locale,
               supportedLocales: context.supportedLocales,
               localizationsDelegates: context.localizationDelegates,
-              home: const HomeScreen());
+              home: const EditDetailsScreen(isInitialSetup: false));
         },
       ),
     );

@@ -19,17 +19,16 @@ class AuthScreen extends StatelessWidget {
         final cubit = context.read<AuthCubit>();
         return BlocListener<AuthCubit, AuthState>(
           listener: (context, state) async {
-            if (cubit.previousState is LoadingState &&
-                Navigator.canPop(context)) {
-              Navigator.of(context).pop();
-            }
-
             if (cubit.previousState is LoadingState) {
               await Navigator.of(context).maybePop();
             }
 
+            if (state is LoadingState && cubit.previousState is! LoadingState) {
+              if (context.mounted) showLoadingDialog(context);
+            }
+
             if (state is ErrorState) {
-              showErrorDialog(context, state.msg);
+              if (context.mounted) showErrorDialog(context, state.msg);
             }
           },
           child: GestureDetector(

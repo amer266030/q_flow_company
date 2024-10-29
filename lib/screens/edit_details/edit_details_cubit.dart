@@ -69,6 +69,12 @@ class EditDetailsCubit extends Cubit<EditDetailsState> {
     emitUpdate();
   }
 
+  @override
+  void emit(EditDetailsState state) {
+    previousState = this.state;
+    super.emit(state);
+  }
+
   void emitLoading() => emit(LoadingState());
   void emitUpdate() => emit(UpdateUIState());
   emitError(String msg) => emit(ErrorState(msg));

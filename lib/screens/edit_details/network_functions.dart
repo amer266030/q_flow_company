@@ -3,6 +3,7 @@ import 'package:q_flow_company/model/user/company.dart';
 import 'package:q_flow_company/screens/edit_details/edit_details_cubit.dart';
 import 'package:q_flow_company/supabase/supabase_company.dart';
 import 'package:q_flow_company/supabase/supabase_mgr.dart';
+
 extension NetworkFunctions on EditDetailsCubit {
   createNewCompany(BuildContext context) async {
     var company = Company(
@@ -36,12 +37,10 @@ extension NetworkFunctions on EditDetailsCubit {
       emitLoading();
       await SupabaseCompany.updateCompany(
           imageFile: logo, company: company, companyId: companyId);
-      await Future.delayed(Duration(milliseconds: 50));
-
-      Navigator.of(context).pop();
+      if (context.mounted) navigateToPositionOpening(context);
     } catch (e) {
-      emitError('Could not update event!\nPlease try again later.');
+      emitError(
+          'Could not update event!\nPlease try again later.\n${e.toString()}');
     }
   }
 }
-

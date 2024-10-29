@@ -88,20 +88,5 @@ class SupabaseCompany {
     }
   }
 
-  static Future<bool> doesCompanyExist(Company company) async {
-    try {
-      final response = await Supabase.instance.client
-          .from(tableKey)
-          .select()
-          .eq('id', company.id ?? '')
-          .single();
-
-      return response != null;
-    } on PostgrestException catch (e) {
-      throw Exception('Error checking company existence: ${e.message}');
-    } catch (e) {
-      throw Exception(
-          'Unknown error occurred while checking company existence: $e');
-    }
-  }
+ 
 }

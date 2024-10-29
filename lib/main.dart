@@ -38,7 +38,7 @@ class MainApp extends StatelessWidget {
               locale: context.locale,
               supportedLocales: context.supportedLocales,
               localizationsDelegates: context.localizationDelegates,
-              home: const EditDetailsScreen(isInitialSetup: false));
+              home: const AuthScreen());
         },
       ),
     );

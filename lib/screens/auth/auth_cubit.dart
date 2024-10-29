@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
 import 'package:q_flow_company/model/user/company.dart';
+import 'package:q_flow_company/screens/auth/network_functions.dart';
 import 'package:q_flow_company/screens/edit_details/edit_details_screen.dart';
 
 import '../home/home_screen.dart';
@@ -17,14 +18,18 @@ class AuthCubit extends Cubit<AuthState> {
   bool isOtp = false;
   Company? company;
 
-  navigateToEditDetails(BuildContext context) =>
+  navigateToEditDetails(
+    BuildContext context,
+  ) =>
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => const EditDetailsScreen(
+          builder: (context) => EditDetailsScreen(
                 isInitialSetup: false,
               )));
 
-  navigateToHome(BuildContext context) => Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const HomeScreen()));
+  navigateToHome(BuildContext context) {
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const HomeScreen()));
+  }
 
   @override
   void emit(AuthState state) {

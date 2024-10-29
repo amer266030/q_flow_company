@@ -23,7 +23,7 @@ import 'edit_details_cubit.dart';
 
 class EditDetailsScreen extends StatelessWidget {
   const EditDetailsScreen(
-      {super.key, this.company, required this.isInitialSetup});
+      {super.key, this.company, this.isInitialSetup = true});
   final Company? company;
   final bool isInitialSetup;
 
@@ -181,11 +181,24 @@ class EditDetailsScreen extends StatelessWidget {
                                   EditDetailsState>(
                                 builder: (context, state) {
                                   return PrimaryBtn(
-                                      callback: () => cubit.updateCompany(
-                                          context,
-                                          SupabaseMgr.shared.supabase.auth
-                                                  .currentUser?.id ??
-                                              ''),
+                                      callback: () => {
+                                            if (isInitialSetup == false)
+                                              {cubit.createNewCompany(context)}
+                                            else
+                                              {
+                                                cubit.updateCompany(
+                                                    context,
+                                                    SupabaseMgr
+                                                            .shared
+                                                            .supabase
+                                                            .auth
+                                                            .currentUser
+                                                            ?.id ??
+                                                        '')
+                                              },
+                                            cubit.navigateToPositionOpening(
+                                                context),
+                                          },
                                       title: 'Next');
                                 },
                               ),

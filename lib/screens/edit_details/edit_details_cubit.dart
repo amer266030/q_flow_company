@@ -35,6 +35,7 @@ class EditDetailsCubit extends Cubit<EditDetailsState> {
     nameController.text = company?.name ?? '';
     descriptionController.text = company?.description ?? '';
     companySize = company?.companySize ?? CompanySize.zeroTo50;
+    ;
 
     // if (company?.establishedYear != null) {
     //   startDate = company!.establishedYear!;

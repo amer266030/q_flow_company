@@ -28,7 +28,9 @@ class HomeScreen extends StatelessWidget {
       child: Builder(builder: (context) {
         final cubit = context.read<HomeCubit>();
         return Scaffold(
-          appBar: const AppBarView(),
+          appBar: AppBarView(
+            companyName: cubit.company?.name ?? '',
+          ),
           drawer: const DrawerScreen(),
           body: SafeArea(
             child: Padding(

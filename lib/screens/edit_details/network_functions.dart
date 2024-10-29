@@ -2,33 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:q_flow_company/model/user/company.dart';
 import 'package:q_flow_company/screens/edit_details/edit_details_cubit.dart';
 import 'package:q_flow_company/supabase/supabase_company.dart';
-
+import 'package:q_flow_company/supabase/supabase_mgr.dart';
 extension NetworkFunctions on EditDetailsCubit {
-  Future createNewCompany(BuildContext context) async {
+  createNewCompany(BuildContext context) async {
+    var company = Company(
+      id: SupabaseMgr.shared.supabase.auth.currentUser?.id ?? '',
+      name: nameController.text,
+      description: descriptionController.text,
+      establishedYear: startDate.year,
+      companySize: companySize,
+    );
     try {
       emitLoading();
-      var response = await SupabaseCompany.createCompany(
-        company: Company(
-          name: nameController.text,
-          description: descriptionController.text,
-          establishedYear: startDate.year,
-          companySize: companySize,
-        ),
+      await SupabaseCompany.createCompany(
+        company: company,
         logoFile: logo,
       );
-
-      print(response);
-
-      emitUpdate();
-      // if (context.mounted) {
-      //   Navigator.of(context).pop(); // Now, try to pop the context
-      // }
+      await Future.delayed(Duration(milliseconds: 50));
+      Navigator.of(context).pop();
     } catch (e) {
-      print(e.toString());
-      emitUpdate();
-      if (context.mounted) {
-        // showSnackBar(context, e.toString(), AnimatedSnackBarType.error);
-      }
+      emitError('Could not create company!\nPlease try again later.');
+    }
+  }
+
+  updateCompany(BuildContext context, String companyId) async {
+    var company = Company(
+      name: nameController.text,
+      description: descriptionController.text,
+      establishedYear: startDate.year,
+      companySize: companySize,
+    );
+    try {
+      emitLoading();
+      await SupabaseCompany.updateCompany(
+          imageFile: logo, company: company, companyId: companyId);
+      await Future.delayed(Duration(milliseconds: 50));
+
+      Navigator.of(context).pop();
+    } catch (e) {
+      emitError('Could not update event!\nPlease try again later.');
     }
   }
 }
+

@@ -8,7 +8,9 @@ import '../../../mangers/alert_manger.dart';
 class AppBarView extends StatelessWidget implements PreferredSizeWidget {
   const AppBarView({
     super.key,
+required this.companyName,
   });
+  final String companyName;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class AppBarView extends StatelessWidget implements PreferredSizeWidget {
           )),
       centerTitle: true,
       title: Text(
-        "SDAIA",
+        companyName,
         style: TextStyle(
           color: context.textColor1,
           fontSize: context.titleMedium.fontSize,
@@ -31,7 +33,7 @@ class AppBarView extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           onPressed: () {
             AlertManager().showQRAlert(
-                context: context, title: "Yara Albouq", qr: Img.logo);
+                context: context, title: companyName, qr: Img.logo);
           },
           icon: const Icon(Icons.qr_code, size: 40),
         ),

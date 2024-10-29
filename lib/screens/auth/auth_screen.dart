@@ -21,12 +21,11 @@ class AuthScreen extends StatelessWidget {
           listener: (context, state) async {
             if (cubit.previousState is LoadingState &&
                 Navigator.canPop(context)) {
-              Navigator.of(context)
-                  .pop(); 
+              Navigator.of(context).pop();
             }
 
-            if (state is LoadingState && cubit.previousState is! LoadingState) {
-              showLoadingDialog(context);
+            if (cubit.previousState is LoadingState) {
+              await Navigator.of(context).maybePop();
             }
 
             if (state is ErrorState) {

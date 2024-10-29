@@ -3,6 +3,7 @@ import 'package:q_flow_company/model/user/company.dart';
 import 'package:q_flow_company/screens/auth/auth_cubit.dart';
 import 'package:q_flow_company/supabase/supabase_auth.dart';
 import 'package:q_flow_company/supabase/supabase_company.dart';
+import 'package:q_flow_company/supabase/supabase_mgr.dart';
 
 extension NetworkFunctions on AuthCubit {
   sendOTP(BuildContext context) async {
@@ -23,16 +24,18 @@ extension NetworkFunctions on AuthCubit {
         emailController.text,
         stringOtp,
       );
+      if (company != null) {
+        Company companyToCheck =
+            Company(id: SupabaseMgr.shared.supabase.auth.currentUser?.id);
+        bool exists = await SupabaseCompany.doesCompanyExist(companyToCheck);
 
-      // var company = Company(id: "65adde75-c711-4298-8045-4bda88ed9225");
-      // bool companyExists = await SupabaseCompany.doesCompanyExist(company);
-
-      if (context.mounted) {
-        print('Navigating to Home');
-        navigateToHome(context);
-        //   navigateToEditDetails(context);
+        if (exists) {
+          navigateToHome(context);
+        } else {
+          navigateToEditDetails(context);
+        }
       } else {
-        print('context not mounted!');
+        navigateToEditDetails(context);
       }
     } catch (e) {
       emitError('Could not verify OTP');

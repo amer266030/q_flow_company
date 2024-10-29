@@ -46,12 +46,18 @@ class SupabaseCompany {
     }
   }
 
-  static Future updateCompany(Company company) async {
+  static Future updateCompany( {required Company company,
+      required String companyId,
+      required File? imageFile}) async {
+        
     try {
+       if (imageFile != null) {
+        company.logoUrl = await uploadLogo(imageFile, company.name ?? '1234');
+      }
       final response = await supabase
           .from(tableKey)
           .update(company.toJson())
-          .eq('id', company.id ?? '');
+          .eq('id', companyId);
       return response;
     } on AuthException catch (_) {
       rethrow;

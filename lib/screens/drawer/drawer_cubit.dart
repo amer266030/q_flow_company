@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-
 import '../../theme_data/app_theme_cubit.dart';
 
 import '../edit_details/edit_details_screen.dart';
@@ -19,14 +18,17 @@ class DrawerCubit extends Cubit<DrawerState> {
 
   navigateToEditDetails(BuildContext context) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const EditDetailsScreen()))
+        .push(MaterialPageRoute(
+            builder: (context) => const EditDetailsScreen(
+                  isInitialSetup: true,
+                )))
         .then((_) {
       // Update Info on page?
     });
   }
 
-  navigateToPrivacyPolicy(BuildContext context) => Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => const PrivacyPolicyScreen()));
+  navigateToPrivacyPolicy(BuildContext context) => Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => const PrivacyPolicyScreen()));
 
   void toggleLanguage(BuildContext context) {
     isEnglish = !isEnglish;

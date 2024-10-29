@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:q_flow_company/model/enum/queue_status.dart';
+import 'package:q_flow_company/model/user/company.dart';
 
 import '../../mock_data/visitor_data.dart';
 import '../../model/enum/events.dart';
@@ -14,6 +15,7 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial()) {
     filterVisitors();
   }
+  Company? company;
   List<Visitor> filteredVisitors = [];
   VisitorStatus selectedVisitorStatus = VisitorStatus.inQueue;
   QueueStatus selectedQueueStatus = QueueStatus.close;
@@ -58,5 +60,8 @@ class HomeCubit extends Cubit<HomeState> {
   navigateToVisitorDetails(BuildContext context) => Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => const VisitorDetailsScreen()));
 
-  void emitUpdate() => emit(UpdateUIState());
+   emitUpdate() => emit(UpdateUIState());
+  emitError(String msg) => emit(ErrorState(msg));
+    emitLoading() => emit(LoadingState());
+
 }

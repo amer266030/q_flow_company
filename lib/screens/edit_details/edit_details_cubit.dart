@@ -22,7 +22,6 @@ class EditDetailsCubit extends Cubit<EditDetailsState> {
   }
   EditDetailsState? previousState;
   final dataMgr = GetIt.I.get<DataMgr>();
-  var companyId = const Uuid().v4().toString();
 
   File? logoFile;
   final nameController = TextEditingController();

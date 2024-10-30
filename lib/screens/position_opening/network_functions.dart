@@ -1,13 +1,29 @@
+import 'package:flutter/cupertino.dart';
 import 'package:q_flow_company/screens/position_opening/position_opening_cubit.dart';
+import 'package:q_flow_company/supabase/supabase_skill.dart';
+
+import '../../model/skills/skill.dart';
 
 extension NetworkFunctions on PositionOpeningCubit {
-  Future fetchCompanyDetails() async {
+  // Use for both insert and update
+  Future updateSkills(BuildContext context) async {
     try {
       emitLoading();
-      var companies = await SupabaseCompany.fetchCompany();
-      return companies;
+      var techSkills = createSkills();
+      var skills = await SupabaseSkill.updateSkills(techSkills);
+      dataMgr.company?.skills = skills;
+      emitUpdate();
+
+      if (context.mounted) navigateToHome(context);
     } catch (e) {
-      print("Error loading company details: $e");
+      emitError("Error loading company details: $e");
     }
+  }
+
+  List<Skill> createSkills() {
+    return positions
+        .map((position) =>
+            Skill(companyId: dataMgr.company?.id, techSkill: position))
+        .toList();
   }
 }

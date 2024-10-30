@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:q_flow_company/screens/position_opening/network_functions.dart';
 import 'package:q_flow_company/screens/position_opening/position_opening_cubit.dart';
 import 'package:q_flow_company/theme_data/extensions/text_style_ext.dart';
 import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
@@ -60,7 +61,7 @@ class PositionOpeningScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: PrimaryBtn(
-                            callback: () => cubit.navigateToHome(context),
+                            callback: () => cubit.updateSkills(context),
                             title: 'Continue'),
                       ),
                     ],

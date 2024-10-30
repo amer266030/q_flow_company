@@ -60,7 +60,9 @@ class EditDetailsScreen extends StatelessWidget {
                         BlocBuilder<EditDetailsCubit, EditDetailsState>(
                           builder: (context, state) {
                             return _ImgView(
-                                logoImage: cubit.logoImage ?? Img.logo);
+                              cubit: cubit,
+                              company: company,
+                            );
                           },
                         ),
                         TextButton(
@@ -215,10 +217,9 @@ class EditDetailsScreen extends StatelessWidget {
 }
 
 class _ImgView extends StatelessWidget {
-  const _ImgView({
-    required this.logoImage,
-  });
-  final ImageProvider logoImage;
+  const _ImgView({required this.cubit, this.company});
+  final EditDetailsCubit cubit;
+  final Company? company;
 
   @override
   Widget build(BuildContext context) {
@@ -232,18 +233,19 @@ class _ImgView extends StatelessWidget {
               ),
               width: 140,
               height: 140,
-              child: Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      elevation: 5,
-                      child: ClipOval(
-                        child: logoImage != null
-                            ? Image(image: logoImage, fit: BoxFit.cover)
-                            : const Image(image: Img.logo, fit: BoxFit.cover),
-                      )))),
+              child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  elevation: 5,
+                  child: ClipOval(
+                    child: cubit.logo != null
+                        ? Image.file(cubit.logo!, fit: BoxFit.cover)
+                        : company?.logoUrl == null
+                            ? Image(image: Img.logo, fit: BoxFit.cover)
+                            : Image.network(company!.logoUrl!,
+                                fit: BoxFit.cover),
+                  ))),
         ),
       ],
     );

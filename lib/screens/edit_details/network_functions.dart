@@ -38,7 +38,7 @@ extension NetworkFunctions on EditDetailsCubit {
       await SupabaseCompany.updateCompany(
           imageFile: logo, company: company, companyId: companyId);
       if (context.mounted) navigateToPositionOpening(context);
-       dataMgr.saveCompanyData(company: company);
+      dataMgr.saveCompanyData(company: company);
     } catch (e) {
       emitError(
           'Could not update event!\nPlease try again later.\n${e.toString()}');

@@ -16,9 +16,11 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   OnboardingCubit(BuildContext context) : super(OnboardingInitial()) {
     initialLoad(context);
   }
+  var idx = 0;
 
   initialLoad(BuildContext context) async {
     var dataMgr = GetIt.I.get<DataMgr>();
+    await dataMgr.fetchData();
     if (dataMgr.company != null) {
       navigateToHome(context);
     } else if (SupabaseMgr.shared.currentUser != null) {
@@ -26,8 +28,6 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       if (context.mounted) navigateToEditCompany(context);
     }
   }
-
-  var idx = 0;
 
   changeIdx() {
     idx += 1;

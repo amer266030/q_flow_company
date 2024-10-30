@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:q_flow_company/extensions/screen_size.dart';
 import 'package:q_flow_company/screens/drawer/subviews/drawer_item_view.dart';
 import 'package:q_flow_company/screens/drawer/subviews/toggle_list_item.dart';
 import 'package:q_flow_company/theme_data/extensions/text_style_ext.dart';
@@ -25,11 +26,12 @@ class DrawerScreen extends StatelessWidget {
         return Drawer(
           child: SafeArea(
             child: ListView(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16),
               children: [
                 AspectRatio(
-                    aspectRatio: 3,
-                    child: Container(
+                  aspectRatio: 2,
+                  child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 65),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         boxShadow: [
@@ -40,8 +42,15 @@ class DrawerScreen extends StatelessWidget {
                               blurStyle: BlurStyle.outer),
                         ],
                       ),
-                      child: const Image(image: Img.logo),
-                    )),
+                      child: cubit.dataMgr.company?.logoUrl == null
+                          ? Image(image: Img.logo, fit: BoxFit.contain)
+                          : ClipOval(
+                              child: Image.network(
+                                cubit.dataMgr.company!.logoUrl!,
+                                fit: BoxFit.cover,
+                              ),
+                            )),
+                ),
                 const SizedBox(height: 8),
                 Align(
                   alignment: Alignment.center,

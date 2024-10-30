@@ -32,8 +32,6 @@ class EditDetailsCubit extends Cubit<EditDetailsState> {
   var companySize = CompanySize.zeroTo50;
 
   initialLoad(Company? company) {
-    var dataMgr = GetIt.I.get<DataMgr>();
-
     if (company != null) {
       // If a company is passed, initialize with that company data
       companyId = company.id ?? companyId;
@@ -69,6 +67,7 @@ class EditDetailsCubit extends Cubit<EditDetailsState> {
   navigateToPositionOpening(BuildContext context) =>
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => const PositionOpeningScreen()));
+  navigateBack(BuildContext context) => Navigator.of(context).pop();
 
   updateStartDate(DateTime date) {
     startDate = date;

@@ -44,7 +44,7 @@ extension NetworkFunctions on AuthCubit {
     try {
       emitLoading();
       var companies = await SupabaseCompany.fetchCompany();
-      print(companies);
+
       return companies;
     } catch (e) {
       print("Error loading company details: $e");

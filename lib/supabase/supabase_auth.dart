@@ -3,19 +3,23 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseAuth {
   static final SupabaseClient supabase = SupabaseMgr.shared.supabase;
+  static final invitationTableKey = 'event_invited_user';
 
   static Future sendOTP(String email) async {
     try {
-      // final profileCheck = await supabase
-      //     .from('profile')
-      //     .select('id, role')
-      //     .eq('email', email)
-      //     .single();
-      // if (profileCheck['role'] != 'company') {
-      //   throw Exception(
-      //       "Access denied. User must have an organizer profile to sign in.");
-      // }
+       final invitationCheck = await supabase
+          .from(invitationTableKey)
+          .select('is_company')
+          .eq('email', email)
+          .maybeSingle();
 
+      if (invitationCheck == null) {
+        throw Exception(
+            "The provided email haven't been invited to an event. Please contact the organizer for support");
+      } else if (invitationCheck['is_company'] == false) {
+        throw Exception(
+            "Access Denied!\nProvided email is intended for our Visitor App");
+      }
       var response = await supabase.auth.signInWithOtp(email: email);
       return response;
     } on AuthException catch (_) {

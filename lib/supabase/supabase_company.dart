@@ -11,6 +11,7 @@ class SupabaseCompany {
   static var supabase = SupabaseMgr.shared.supabase;
   static const String tableKey = 'company';
   static const String bucketKey = "company_logo";
+  static final dataMgr = GetIt.I.get<DataMgr>();
 
   static Future<Company>? fetchCompany() async {
     var companyId = supabase.auth.currentUser?.id ?? '';
@@ -18,8 +19,7 @@ class SupabaseCompany {
       var result =
           await supabase.from(tableKey).select().eq('id', companyId).single();
       var company = Company.fromJson(result);
-      var dataMgr = GetIt.I.get<DataMgr>();
-      dataMgr.saveCompanyData(company: company);
+
       return company;
     } on AuthException catch (_) {
       rethrow;
@@ -32,15 +32,13 @@ class SupabaseCompany {
 
   static Future createCompany(
       {required Company company, required File? logoFile}) async {
+    if (logoFile != null) {
+      company.logoUrl = await uploadLogo(logoFile, company.name ?? '1234');
+    }
     try {
-      if (logoFile != null) {
-        company.logoUrl = await uploadLogo(logoFile, company.name ?? '1234');
-      }
-      final response = await supabase
-          .from(tableKey)
-          .insert(company.toJson())
-          .select()
-          .single();
+      final response = await supabase.from(tableKey).insert(company.toJson());
+      dataMgr.saveCompanyData(company: company);
+
       return response;
     } on AuthException catch (_) {
       rethrow;
@@ -55,14 +53,15 @@ class SupabaseCompany {
       {required Company company,
       required String companyId,
       required File? imageFile}) async {
+    if (imageFile != null) {
+      company.logoUrl = await uploadLogo(imageFile, company.name ?? '1234');
+    }
     try {
-      if (imageFile != null) {
-        company.logoUrl = await uploadLogo(imageFile, company.name ?? '1234');
-      }
       final response = await supabase
           .from(tableKey)
           .update(company.toJson())
           .eq('id', companyId);
+      dataMgr.saveCompanyData(company: company);
       return response;
     } on AuthException catch (_) {
       rethrow;

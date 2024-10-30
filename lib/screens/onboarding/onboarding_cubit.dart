@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:q_flow_company/mangers/data_mgr.dart';
 import 'package:q_flow_company/screens/edit_details/edit_details_screen.dart';
 import 'package:q_flow_company/screens/home/home_screen.dart';
-import 'package:q_flow_company/supabase/supabase_mgr.dart';
+import 'package:q_flow_company/supabase/client/supabase_mgr.dart';
 
 import '../../extensions/img_ext.dart';
 import '../auth/auth_screen.dart';
@@ -21,6 +21,8 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   initialLoad(BuildContext context) async {
     var dataMgr = GetIt.I.get<DataMgr>();
     await dataMgr.fetchData();
+    print(SupabaseMgr.shared.currentUser?.id);
+    print(dataMgr.company?.id);
     if (dataMgr.company != null) {
       navigateToHome(context);
     } else if (SupabaseMgr.shared.currentUser != null) {

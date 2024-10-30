@@ -2,13 +2,14 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:q_flow_company/extensions/screen_size.dart';
-import 'package:q_flow_company/model/enum/queue_status.dart';
+
 import 'package:q_flow_company/screens/home/subviews/app_bar_view.dart';
 import 'package:q_flow_company/screens/home/subviews/filter_item_view.dart';
 import 'package:q_flow_company/theme_data/extensions/text_style_ext.dart';
 import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
-import '../../model/enum/events.dart';
-import '../../model/enum/visitor_status.dart';
+
+import '../../model/enums/queue_status.dart';
+import '../../model/enums/visitor_status.dart';
 import '../../reusable_components/button/expanded_toggle_buttons.dart';
 import '../../reusable_components/button/primary_btn.dart';
 import '../../reusable_components/cards/swiper_card.dart';
@@ -51,12 +52,15 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           children: [
-                            FilterItemView(
-                              itemValues:
-                                  Events.values.map((e) => e.value).toList(),
-                              setValueFunc: (str) => cubit.filterBySize(str),
-                              currentSelection: cubit.selectedEvent?.value,
-                            ),
+                            if (cubit.selectedEvent != null)
+                              FilterItemView(
+                                itemValues: cubit.events
+                                    .map((e) => e.name ?? '')
+                                    .toList(),
+                                setValueFunc: (str) => cubit.selectEvent(str),
+                                currentSelection:
+                                    cubit.selectedEvent?.name ?? '',
+                              ),
                           ],
                         ),
                       ),

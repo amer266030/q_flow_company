@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:q_flow_company/extensions/date_ext.dart';
 import 'package:q_flow_company/mangers/data_mgr.dart';
-import 'package:q_flow_company/model/enum/company_size.dart';
+
 import 'package:q_flow_company/model/user/company.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../model/enums/company_size.dart';
+import '../../model/enums/user_social_link.dart';
 import '../position_opening/position_opening_screen.dart';
 
 part 'edit_details_state.dart';
@@ -21,7 +24,7 @@ class EditDetailsCubit extends Cubit<EditDetailsState> {
   final dataMgr = GetIt.I.get<DataMgr>();
   var companyId = const Uuid().v4().toString();
 
-  File? logo;
+  File? logoFile;
   final nameController = TextEditingController();
   final descriptionController = TextEditingController();
   final linkedInController = TextEditingController();
@@ -33,34 +36,33 @@ class EditDetailsCubit extends Cubit<EditDetailsState> {
 
   initialLoad(Company? company) {
     if (company != null) {
-      // If a company is passed, initialize with that company data
-      companyId = company.id ?? companyId;
       nameController.text = company.name ?? '';
       descriptionController.text = company.description ?? '';
       companySize = company.companySize ?? CompanySize.zeroTo50;
-      startDate = DateTime(company.establishedYear ?? DateTime.now().year);
+      if (company.establishedYear != null) {
+        startDate = '01/01/${company.establishedYear!}'.toDate();
+      }
+      if (company.socialLinks != null && company.socialLinks!.isNotEmpty) {
+        for (var link in company.socialLinks!) {
+          switch (link.linkType) {
+            case LinkType.linkedIn:
+              linkedInController.text = link.url ?? '';
+            case LinkType.website:
+              websiteController.text = link.url ?? '';
+            case LinkType.twitter:
+              xController.text = link.url ?? '';
+            default:
+          }
+        }
+      }
     }
-    if (dataMgr.company != null) {
-      var companyData = dataMgr.company!;
-      companyId = companyData.id ?? const Uuid().v4().toString();
-      nameController.text = companyData.name ?? '';
-      descriptionController.text = companyData.description ?? '';
-      companySize = companyData.companySize ?? CompanySize.zeroTo50;
-      startDate = DateTime(companyData.establishedYear ?? DateTime.now().year);
-    }
-  }
-
-  ImageProvider? get logoImage {
-    return logo != null
-        ? FileImage(logo!)
-        : null; // Return FileImage if logo is set
   }
 
   void getImage() async {
     final img = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (img != null) {
-      logo = File(img.path);
-      emitUpdate(); // Emit update after setting the logo
+      logoFile = File(img.path);
+      emitUpdate();
     }
   }
 

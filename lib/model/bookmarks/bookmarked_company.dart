@@ -1,7 +1,7 @@
 class BookmarkedCompany {
   String? id;
-  String? userId;
+  String? visitorId;
   String? companyId;
 
-  BookmarkedCompany({this.id, this.userId, this.companyId});
+  BookmarkedCompany({this.id, this.visitorId, this.companyId});
 }

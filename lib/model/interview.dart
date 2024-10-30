@@ -1,4 +1,4 @@
-import 'enum/interview_status.dart';
+import 'enums/interview_status.dart';
 
 class Interview {
   String? id;
@@ -20,10 +20,10 @@ class Interview {
   factory Interview.fromJson(Map<String, dynamic> json) {
     return Interview(
       id: json['id'] as String?,
-      visitorId: json['visitorId'] as String?,
-      companyId: json['companyId'] as String?,
-      timeOfBooking: json['timeOfBooking'] as String?,
-      positionInQueue: json['positionInQueue'] as int?,
+      visitorId: json['visitor_id'] as String?,
+      companyId: json['company_id'] as String?,
+      timeOfBooking: json['time_of_booking'] as String?,
+      positionInQueue: json['position_in_queue'] as int?,
       status: json['status'] != null
           ? InterviewStatusExtension.fromString(json['status'] as String)
           : null,
@@ -33,10 +33,10 @@ class Interview {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'visitorId': visitorId,
-      'companyId': companyId,
-      'timeOfBooking': timeOfBooking,
-      'positionInQueue': positionInQueue,
+      'visitor_id': visitorId,
+      'company_id': companyId,
+      'time_of_booking': timeOfBooking,
+      'position_in_queue': positionInQueue,
       'status': status?.value,
     };
   }

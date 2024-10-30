@@ -1,5 +1,5 @@
 class Organizer {
-  String? id; // References user_id
+  String? id; // References profile_id
   String? name;
   String? logoUrl;
   DateTime? createdAt;

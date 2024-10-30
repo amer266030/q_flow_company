@@ -4,7 +4,7 @@ import 'package:q_flow_company/screens/position_opening/position_opening_cubit.d
 import 'package:q_flow_company/theme_data/extensions/text_style_ext.dart';
 import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
 
-import '../../model/enum/tech_skill.dart';
+import '../../model/enums/tech_skill.dart';
 import '../../reusable_components/button/primary_btn.dart';
 import '../../reusable_components/page_header_view.dart';
 
@@ -26,8 +26,9 @@ class PositionOpeningScreen extends StatelessWidget {
                 child: Padding(
               padding: const EdgeInsets.all(24),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const PageHeaderView(title: "Position Opening"),
+                  const PageHeaderView(title: "Job Positions"),
                   BlocBuilder<PositionOpeningCubit, PositionOpeningState>(
                     builder: (context, state) {
                       return Expanded(
@@ -35,15 +36,15 @@ class PositionOpeningScreen extends StatelessWidget {
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            childAspectRatio: 1,
-                            mainAxisSpacing: 24,
-                            crossAxisSpacing: 24,
+                            childAspectRatio: 2.5,
+                            mainAxisSpacing: 16,
+                            crossAxisSpacing: 16,
                           ),
                           children: TechSkill.values
                               .map((b) => InkWell(
                                     splashColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
-                                    onTap: () => cubit.postionTapped(b),
+                                    onTap: () => cubit.positionTapped(b),
                                     child: _GridItemView(
                                         title: b.value,
                                         isSelected:
@@ -84,19 +85,23 @@ class _GridItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          shape: BoxShape.circle,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(100),
           color: context.bg2,
           border: Border.all(
               color: isSelected ? context.primary : context.bg3, width: 3)),
       child: Center(
-        child: Text(
-          title,
-          style: TextStyle(
-              fontSize: context.bodyLarge.fontSize,
-              color: isSelected ? context.primary : context.textColor2),
-          textAlign: TextAlign.center,
-          maxLines: 2,
-          softWrap: true,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            title,
+            style: TextStyle(
+                fontSize: context.bodyMedium.fontSize,
+                color: isSelected ? context.primary : context.textColor2),
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            softWrap: true,
+          ),
         ),
       ),
     );

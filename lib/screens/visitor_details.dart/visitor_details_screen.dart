@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:q_flow_company/extensions/screen_size.dart';
-import 'package:q_flow_company/model/enum/tech_skill.dart';
+import 'package:q_flow_company/model/enums/tech_skill.dart';
+
 import 'package:q_flow_company/screens/visitor_details.dart/subviews/social_media.dart';
 import 'package:q_flow_company/screens/visitor_details.dart/visitor_details_cubit.dart';
 import 'package:q_flow_company/theme_data/extensions/text_style_ext.dart';
@@ -10,7 +11,8 @@ import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
 
 import '../../extensions/img_ext.dart';
 import '../../mangers/alert_manger.dart';
-import '../../model/enum/visitor_rating.dart';
+
+import '../../model/enums/visitor_rating.dart';
 import '../../reusable_components/button/book_mark_btn.dart';
 import '../../reusable_components/button/primary_btn.dart';
 import '../../reusable_components/button/secondary_btn.dart';

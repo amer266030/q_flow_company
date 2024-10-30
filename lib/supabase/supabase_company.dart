@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:get_it/get_it.dart';
 import 'package:q_flow_company/mangers/data_mgr.dart';
 import 'package:q_flow_company/model/user/company.dart';
-import 'package:q_flow_company/supabase/supabase_mgr.dart';
+import 'package:q_flow_company/supabase/client/supabase_mgr.dart';
 import 'package:q_flow_company/utils/img_converter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../model/social_links/social_link.dart';
 
 class SupabaseCompany {
   static var supabase = SupabaseMgr.shared.supabase;
@@ -16,9 +18,22 @@ class SupabaseCompany {
   static Future<Company>? fetchCompany() async {
     var companyId = supabase.auth.currentUser?.id ?? '';
     try {
-      var result =
-          await supabase.from(tableKey).select().eq('id', companyId).single();
-      var company = Company.fromJson(result);
+      // Fetch the visitor profile and associated social links based on user_id
+      final response = await supabase
+          .from(tableKey)
+          .select('*, social_link(*)')
+          .eq('id', companyId)
+          .single();
+
+      final company = Company.fromJson(response);
+
+      dataMgr.saveCompanyData(company: company);
+
+      if (response['social_link'] != null) {
+        company.socialLinks = (response['social_link'] as List)
+            .map((link) => SocialLink.fromJson(link))
+            .toList();
+      }
 
       return company;
     } on AuthException catch (_) {
@@ -78,7 +93,7 @@ class SupabaseCompany {
       final fileName = '$itemName.png';
 
       await supabase.storage.from(bucketKey).uploadBinary(fileName, fileBytes,
-          fileOptions: FileOptions(upsert: true));
+          fileOptions: const FileOptions(upsert: true));
 
       final publicUrl = supabase.storage.from(bucketKey).getPublicUrl(fileName);
 

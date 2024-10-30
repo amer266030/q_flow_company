@@ -1,10 +1,10 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../model/enum/tech_skill.dart';
-import '../../model/enum/visitor_rating.dart';
+import '../../model/enums/tech_skill.dart';
+import '../../model/enums/visitor_rating.dart';
 
 part 'visitor_details_state.dart';
 

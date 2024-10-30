@@ -1,17 +1,21 @@
-import '../enum/experience.dart';
-import '../enum/gender.dart';
-import '../enum/visitor_status.dart';
+import '../enums/bootcamp.dart';
+import '../enums/experience.dart';
+import '../enums/gender.dart';
+import '../skills/skill.dart';
+import '../social_links/social_link.dart';
 
 class Visitor {
-  String? id; // References user_id
+  String? id;
   Gender? gender;
   String? fName;
   String? lName;
   Experience? experience;
   String? dob;
+  Bootcamp? bootcamp;
   String? resumeUrl;
   String? avatarUrl;
-  VisitorStatus? status;
+  List<SocialLink>? socialLinks;
+  List<Skill>? skills;
 
   Visitor({
     this.id,
@@ -20,9 +24,11 @@ class Visitor {
     this.lName,
     this.experience,
     this.dob,
+    this.bootcamp,
     this.resumeUrl,
     this.avatarUrl,
-    required this.status,
+    this.socialLinks,
+    this.skills,
   });
 
   factory Visitor.fromJson(Map<String, dynamic> json) {
@@ -31,31 +37,42 @@ class Visitor {
       gender: json['gender'] != null
           ? GenderExtension.fromString(json['gender'] as String?)
           : null,
-      fName: json['fName'] as String?,
-      lName: json['lName'] as String?,
+      fName: json['f_name'] as String?,
+      lName: json['l_name'] as String?,
       experience: json['experience'] != null
           ? ExperienceExtension.fromString(json['experience'] as String?)
           : null,
-      status: json['status'] != null
-          ? VisitorExtension.fromString(json['status'] as String?)
-          : null,
       dob: json['dob'] as String?,
-      resumeUrl: json['resumeUrl'] as String?,
-      avatarUrl: json['avatarUrl'] as String?,
+      bootcamp: json['bootcamp'] != null
+          ? BootcampExtension.fromString(json['bootcamp'] as String?)
+          : null,
+      resumeUrl: json['resume_url'] as String?,
+      avatarUrl: json['avatar_url'] as String?,
+      socialLinks: json['social_links'] != null
+          ? (json['social_links'] as List)
+              .map((link) => SocialLink.fromJson(link))
+              .toList()
+          : null,
+      skills: json['skills'] != null
+          ? (json['skills'] as List)
+              .map((link) => Skill.fromJson(link))
+              .toList()
+          : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'gender': gender?.value,
-      'fName': fName,
-      'lName': lName,
+      'f_name': fName,
+      'l_name': lName,
       'experience': experience?.value,
-      'status': status?.value,
       'dob': dob,
-      'resumeUrl': resumeUrl,
-      'avatarUrl': avatarUrl,
+      'bootcamp': bootcamp?.value,
+      'resume_url': resumeUrl,
+      'avatar_url': avatarUrl,
+      // 'social_links': socialLinks?.map((link) => link.toJson()).toList(),
+      // 'skills': skills?.map((skill) => skill.toJson()).toList(),
     };
   }
 }

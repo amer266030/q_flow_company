@@ -1,13 +1,13 @@
-import 'package:q_flow_company/supabase/supabase_mgr.dart';
+import 'package:q_flow_company/supabase/client/supabase_mgr.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseAuth {
   static final SupabaseClient supabase = SupabaseMgr.shared.supabase;
-  static final invitationTableKey = 'event_invited_user';
+  static const invitationTableKey = 'event_invited_user';
 
   static Future sendOTP(String email) async {
     try {
-       final invitationCheck = await supabase
+      final invitationCheck = await supabase
           .from(invitationTableKey)
           .select('is_company')
           .eq('email', email)
@@ -40,7 +40,6 @@ class SupabaseAuth {
           .verifyOTP(email: email, type: OtpType.email, token: otp);
       return response;
     } catch (e) {
-      print('Error verifying OTP: $e');
       rethrow;
     }
   }

@@ -2,19 +2,19 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:q_flow_company/model/enum/company_size.dart';
+
 import 'package:q_flow_company/model/user/company.dart';
 import 'package:q_flow_company/reusable_components/button/date_btn_view.dart';
 import 'package:q_flow_company/reusable_components/custom_dropdown_view.dart';
 import 'package:q_flow_company/reusable_components/dialog/error_dialog.dart';
 import 'package:q_flow_company/reusable_components/dialog/loading_dialog.dart';
 import 'package:q_flow_company/screens/edit_details/network_functions.dart';
-import 'package:q_flow_company/supabase/supabase_mgr.dart';
 
 import 'package:q_flow_company/theme_data/extensions/text_style_ext.dart';
 import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
 
 import '../../extensions/img_ext.dart';
+import '../../model/enums/company_size.dart';
 import '../../reusable_components/button/primary_btn.dart';
 import '../../reusable_components/custom_text_field.dart';
 import '../../reusable_components/page_header_view.dart';
@@ -41,10 +41,10 @@ class EditDetailsScreen extends StatelessWidget {
               }
               if (state is LoadingState &&
                   cubit.previousState is! LoadingState) {
-                showLoadingDialog(context);
+                if (context.mounted) showLoadingDialog(context);
               }
               if (state is ErrorState) {
-                showErrorDialog(context, state.msg);
+                if (context.mounted) showErrorDialog(context, state.msg);
               }
             },
             child: Scaffold(
@@ -187,17 +187,7 @@ class EditDetailsScreen extends StatelessWidget {
                                             if (isInitialSetup == false)
                                               {cubit.createNewCompany(context)}
                                             else
-                                              {
-                                                cubit.updateCompany(
-                                                    context,
-                                                    SupabaseMgr
-                                                            .shared
-                                                            .supabase
-                                                            .auth
-                                                            .currentUser
-                                                            ?.id ??
-                                                        '123')
-                                              },
+                                              {cubit.updateCompany(context)},
                                           },
                                       title: 'Next');
                                 },
@@ -228,24 +218,25 @@ class _ImgView extends StatelessWidget {
       children: [
         ClipOval(
           child: Container(
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+            ),
+            width: 140,
+            height: 140,
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100),
               ),
-              width: 140,
-              height: 140,
-              child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  elevation: 5,
-                  child: ClipOval(
-                    child: cubit.logo != null
-                        ? Image.file(cubit.logo!, fit: BoxFit.cover)
-                        : company?.logoUrl == null
-                            ? Image(image: Img.logo, fit: BoxFit.cover)
-                            : Image.network(company!.logoUrl!,
-                                fit: BoxFit.cover),
-                  ))),
+              elevation: 5,
+              child: ClipOval(
+                child: cubit.logoFile != null
+                    ? Image.file(cubit.logoFile!, fit: BoxFit.cover)
+                    : company?.logoUrl == null
+                        ? const Image(image: Img.logo, fit: BoxFit.cover)
+                        : Image.network(company!.logoUrl!, fit: BoxFit.cover),
+              ),
+            ),
+          ),
         ),
       ],
     );

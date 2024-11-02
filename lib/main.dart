@@ -7,6 +7,7 @@ import 'package:q_flow_company/screens/edit_details/edit_details_screen.dart';
 import 'package:q_flow_company/screens/home/home_screen.dart';
 import 'package:q_flow_company/screens/onboarding/onboarding_screen.dart';
 import 'package:q_flow_company/screens/position_opening/position_opening_screen.dart';
+import 'package:q_flow_company/screens/splash_screen.dart';
 import 'package:q_flow_company/services/di_container.dart';
 import 'package:q_flow_company/supabase/client/supabase_mgr.dart';
 import 'package:q_flow_company/theme_data/app_theme_cubit.dart';
@@ -42,7 +43,7 @@ class MainApp extends StatelessWidget {
               locale: context.locale,
               supportedLocales: context.supportedLocales,
               localizationsDelegates: context.localizationDelegates,
-              home: const PositionOpeningScreen());
+              home: const SplashScreen());
         },
       ),
     );

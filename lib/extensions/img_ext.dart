@@ -15,5 +15,7 @@ extension Img on ImageProvider {
   //splash
   static const splashLight = AssetImage('assets/splash/splash_light.gif');
   static const splashDark = AssetImage('assets/splash/dark_splash.gif');
+  //loading
+  static const loading = AssetImage('assets/loading/loading.gif');
 }
 

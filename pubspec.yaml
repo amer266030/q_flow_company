@@ -60,6 +60,7 @@ flutter:
   - assets/onboarding/
   - assets/mock_image/
   - assets/splash/
+  - assets/loading/
   - .env
   fonts:
     - family: Inter

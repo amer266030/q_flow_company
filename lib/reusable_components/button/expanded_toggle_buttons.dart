@@ -66,8 +66,8 @@ class _ItemView extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: ConstrainedBox(
-              constraints:
-                  const BoxConstraints(minWidth: double.infinity, minHeight: 25),
+              constraints: const BoxConstraints(
+                  minWidth: double.infinity, minHeight: 25),
             ),
           ),
         ),
@@ -89,15 +89,16 @@ class _ItemView extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8),
             child: ConstrainedBox(
-              constraints:
-                  const BoxConstraints(minWidth: double.infinity, minHeight: 25),
+              constraints: const BoxConstraints(
+                  minWidth: double.infinity, minHeight: 25),
               child: Center(
                 child: Text(
                   str,
                   style: TextStyle(
-                    fontSize: context.bodyMedium.fontSize,
-                    color: isSelected ? Colors.white : context.textColor3,
-                  ),
+                      fontSize: context.bodyMedium.fontSize,
+                      color: isSelected ? Colors.white : context.textColor3,
+                      fontWeight:
+                          isSelected ? FontWeight.bold : FontWeight.normal),
                 ),
               ),
             ),

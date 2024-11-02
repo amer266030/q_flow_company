@@ -47,7 +47,7 @@ class AlertManager {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-            return CustomAlert(    
+        return CustomAlert(
           title: title,
           secondaryBtnText: secondaryBtnText,
           primaryBtnText: primaryBtnText,
@@ -79,8 +79,8 @@ class AlertManager {
       context: context,
       builder: (BuildContext context) {
         return QRAlert(
-          qr: qr,
           title: title,
+          onClose: () => dismissPreviousAlert(context),
         );
       },
     ).then((_) {

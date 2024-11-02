@@ -14,12 +14,6 @@ extension ThemeExtension on BuildContext {
         : AppColors.darkSecondary;
   }
 
-  Color get accent {
-    return Theme.of(this).brightness == Brightness.light
-        ? AppColors.lightAccent
-        : AppColors.darkAccent;
-  }
-
   Color get bg1 {
     return Theme.of(this).brightness == Brightness.light
         ? AppColors.lightBg1

@@ -1,4 +1,3 @@
-import 'package:q_flow_company/model/enums/tech_skill.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../model/skills/skill.dart';
@@ -13,18 +12,16 @@ class SupabaseSkill {
     if (companyId == null) throw Exception("Company ID not found");
 
     try {
-      // Step 1: Delete existing skills for the company
       await supabase.from(tableKey).delete().eq('company_id', companyId);
 
-      // Step 2: Insert the new selection of skills
-      final skillsData = skills.map((skill) {
+      List<Map<String, dynamic>> skillsData = skills.map((skill) {
         skill.companyId = companyId;
         return skill.toJson();
       }).toList();
 
       var result = await supabase.from(tableKey).insert(skillsData).select();
 
-      return result;
+      return result.map((json) => Skill.fromJson(json)).toList();
     } catch (e) {
       rethrow;
     }

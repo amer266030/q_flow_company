@@ -13,18 +13,17 @@ class Skill {
       id: json['id'],
       visitorId: json['visitor_id'],
       companyId: json['company_id'],
-      techSkill: json['techSkill'] != null
-          ? TechSkillExtension.fromString(json['techSkill'])
+      techSkill: json['tech_skill'] != null
+          ? TechSkillExtension.fromString(json['tech_skill'])
           : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'visitor_id': visitorId,
       'company_id': companyId,
-      'techSkill': techSkill?.value
+      'tech_skill': techSkill?.value
     };
   }
 }

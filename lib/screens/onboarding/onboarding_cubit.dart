@@ -21,8 +21,6 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   initialLoad(BuildContext context) async {
     var dataMgr = GetIt.I.get<DataMgr>();
     await dataMgr.fetchData();
-    print(SupabaseMgr.shared.currentUser?.id);
-    print(dataMgr.company?.id);
     if (dataMgr.company != null) {
       navigateToHome(context);
     } else if (SupabaseMgr.shared.currentUser != null) {

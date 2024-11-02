@@ -7,6 +7,7 @@ import 'package:q_flow_company/supabase/client/supabase_mgr.dart';
 import 'package:q_flow_company/utils/img_converter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../model/skills/skill.dart';
 import '../model/social_links/social_link.dart';
 
 class SupabaseCompany {
@@ -18,10 +19,9 @@ class SupabaseCompany {
   static Future<Company>? fetchCompany() async {
     var companyId = supabase.auth.currentUser?.id ?? '';
     try {
-      // Fetch the visitor profile and associated social links based on user_id
       final response = await supabase
           .from(tableKey)
-          .select('*, social_link(*)')
+          .select('*, social_link(*), skill(*)')
           .eq('id', companyId)
           .single();
 
@@ -32,6 +32,12 @@ class SupabaseCompany {
       if (response['social_link'] != null) {
         company.socialLinks = (response['social_link'] as List)
             .map((link) => SocialLink.fromJson(link))
+            .toList();
+      }
+
+      if (response['skill'] != null) {
+        company.skills = (response['skill'] as List)
+            .map((skill) => Skill.fromJson(skill))
             .toList();
       }
 

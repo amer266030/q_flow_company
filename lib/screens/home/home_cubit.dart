@@ -5,11 +5,10 @@ import 'package:q_flow_company/mangers/data_mgr.dart';
 
 import 'package:q_flow_company/model/user/company.dart';
 
-import '../../mock_data/visitor_data.dart';
-
 import '../../model/enums/queue_status.dart';
 import '../../model/enums/visitor_status.dart';
 import '../../model/event/event.dart';
+import '../../model/interview.dart';
 import '../../model/user/visitor.dart';
 import '../visitor_details.dart/visitor_details_screen.dart';
 
@@ -25,14 +24,14 @@ class HomeCubit extends Cubit<HomeState> {
 
   Event? selectedEvent;
   Company? company;
+  List<Visitor> visitor = [];
   List<Visitor> filteredVisitors = [];
+  List<Interview> interviews = [];
   VisitorStatus selectedVisitorStatus = VisitorStatus.inQueue;
   QueueStatus selectedQueueStatus = QueueStatus.close;
 
   bool isOpenApplying = false;
   double queueLimit = 10;
-
-  List<Visitor> visitor = [];
 
   initialLoad() {
     filterVisitors();

@@ -10,9 +10,8 @@ extension NetworkFunctions on PositionOpeningCubit {
     try {
       emitLoading();
       var techSkills = createSkills();
-      var skills = await SupabaseSkill.updateSkills(techSkills);
-      dataMgr.company?.skills = skills;
-      emitUpdate();
+      await SupabaseSkill.updateSkills(techSkills);
+      dataMgr.company?.skills = techSkills;
 
       if (context.mounted) navigateToHome(context);
     } catch (e) {

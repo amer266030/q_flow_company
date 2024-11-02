@@ -7,6 +7,8 @@ import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
 
 import '../../model/enums/tech_skill.dart';
 import '../../reusable_components/button/primary_btn.dart';
+import '../../reusable_components/dialog/error_dialog.dart';
+import '../../reusable_components/dialog/loading_dialog.dart';
 import '../../reusable_components/page_header_view.dart';
 
 class PositionOpeningScreen extends StatelessWidget {
@@ -20,55 +22,68 @@ class PositionOpeningScreen extends StatelessWidget {
         create: (context) => PositionOpeningCubit(),
         child: Builder(builder: (context) {
           final cubit = context.read<PositionOpeningCubit>();
-
-          return Scaffold(
-            appBar: AppBar(),
-            body: SafeArea(
-                child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const PageHeaderView(title: "Job Positions"),
-                  BlocBuilder<PositionOpeningCubit, PositionOpeningState>(
-                    builder: (context, state) {
-                      return Expanded(
-                        child: GridView(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 2.5,
-                            mainAxisSpacing: 16,
-                            crossAxisSpacing: 16,
+          return BlocListener<PositionOpeningCubit, PositionOpeningState>(
+            listener: (context, state) async {
+              if (cubit.previousState is LoadingState) {
+                await Navigator.of(context).maybePop();
+              }
+              if (state is LoadingState &&
+                  cubit.previousState is! LoadingState) {
+                if (context.mounted) showLoadingDialog(context);
+              }
+              if (state is ErrorState) {
+                if (context.mounted) showErrorDialog(context, state.msg);
+              }
+            },
+            child: Scaffold(
+              appBar: AppBar(),
+              body: SafeArea(
+                  child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const PageHeaderView(title: "Job Positions"),
+                    BlocBuilder<PositionOpeningCubit, PositionOpeningState>(
+                      builder: (context, state) {
+                        return Expanded(
+                          child: GridView(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 2.5,
+                              mainAxisSpacing: 16,
+                              crossAxisSpacing: 16,
+                            ),
+                            children: TechSkill.values
+                                .map((b) => InkWell(
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () => cubit.positionTapped(b),
+                                      child: _GridItemView(
+                                          title: b.value,
+                                          isSelected:
+                                              cubit.positions.contains(b)),
+                                    ))
+                                .toList(),
                           ),
-                          children: TechSkill.values
-                              .map((b) => InkWell(
-                                    splashColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () => cubit.positionTapped(b),
-                                    child: _GridItemView(
-                                        title: b.value,
-                                        isSelected:
-                                            cubit.positions.contains(b)),
-                                  ))
-                              .toList(),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 24),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: PrimaryBtn(
+                              callback: () => cubit.updateSkills(context),
+                              title: 'Continue'),
                         ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: PrimaryBtn(
-                            callback: () => cubit.updateSkills(context),
-                            title: 'Continue'),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            )),
+                      ],
+                    )
+                  ],
+                ),
+              )),
+            ),
           );
         }),
       ),

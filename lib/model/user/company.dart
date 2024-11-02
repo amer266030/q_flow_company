@@ -55,7 +55,6 @@ class Company {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'name': name,
       'description': description,
       'company_size': companySize?.value,

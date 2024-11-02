@@ -25,18 +25,15 @@ extension NetworkFunctions on AuthCubit {
         stringOtp,
       );
 
-      var companies = await fetchCompanyDetails();
+      var company = await fetchCompanyDetails();
 
-      if (companies != null && companies.isNotEmpty) {
-        company = companies.first;
-        navigateToHome(context);
+      if (company != null) {
+        if (context.mounted) navigateToHome(context);
       } else {
-        navigateToEditDetails(
-          context,
-        );
+        if (context.mounted) navigateToEditDetails(context);
       }
     } catch (e) {
-      emitError('Could not verify OTP');
+      emitError(e.toString());
     }
   }
 

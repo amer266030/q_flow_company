@@ -83,7 +83,7 @@ class Company {
       'is_queue_open': isQueueOpen,
       // 'social_links': socialLinks?.map((link) => link.toJson()).toList(),
       // 'skills': skills?.map((skill) => skill.toJson()).toList(),
-      'queue_length': queueLength,
+      // 'queue_length': queueLength,
     };
   }
 }

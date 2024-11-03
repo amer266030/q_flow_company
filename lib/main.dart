@@ -19,11 +19,13 @@ void main() async {
   await SupabaseMgr.shared.initialize();
   await EasyLocalization.ensureInitialized();
   await DIContainer.setup();
-  runApp(EasyLocalization(
-      supportedLocales: const [Locale('en'), Locale('ar')],
-      path: 'assets/translations',
-      fallbackLocale: const Locale('en', 'US'),
-      child: const MainApp()));
+  runApp(
+    EasyLocalization(
+        supportedLocales: const [Locale('en', 'US'), Locale('ar', 'SA')],
+        path: 'assets/translations',
+        fallbackLocale: const Locale('en', 'US'),
+        child: const MainApp()),
+  );
 }
 
 class MainApp extends StatelessWidget {

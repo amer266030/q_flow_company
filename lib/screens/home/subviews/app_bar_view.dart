@@ -8,7 +8,7 @@ import '../../../mangers/alert_manger.dart';
 class AppBarView extends StatelessWidget implements PreferredSizeWidget {
   const AppBarView({
     super.key,
-required this.companyName,
+    required this.companyName,
   });
   final String companyName;
 

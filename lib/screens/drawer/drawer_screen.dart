@@ -8,17 +8,24 @@ import 'package:q_flow_company/theme_data/extensions/text_style_ext.dart';
 import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
 
 import '../../extensions/img_ext.dart';
+import '../../model/event/event.dart';
+import '../../model/user/company.dart';
 import 'drawer_cubit.dart';
 
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({
     super.key,
+    required this.company,
+    required this.event,
+    required this.interviewsCount,
   });
 
+  final Company company;
+  final Event event;
+  final int interviewsCount;
+
   @override
-  Widget build(
-    BuildContext context,
-  ) {
+  Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => DrawerCubit(context),
       child: Builder(builder: (context) {
@@ -26,12 +33,12 @@ class DrawerScreen extends StatelessWidget {
         return Drawer(
           child: SafeArea(
             child: ListView(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               children: [
                 AspectRatio(
                   aspectRatio: 2,
                   child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 65),
+                      padding: const EdgeInsets.symmetric(horizontal: 65),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         boxShadow: [
@@ -43,7 +50,7 @@ class DrawerScreen extends StatelessWidget {
                         ],
                       ),
                       child: cubit.dataMgr.company?.logoUrl == null
-                          ? Image(image: Img.logo, fit: BoxFit.contain)
+                          ? const Image(image: Img.logo, fit: BoxFit.contain)
                           : ClipOval(
                               child: Image.network(
                                 cubit.dataMgr.company!.logoUrl!,
@@ -60,10 +67,8 @@ class DrawerScreen extends StatelessWidget {
                           fontWeight: context.titleLarge.fontWeight)),
                 ),
                 const SizedBox(height: 16),
-                Text(
-                  "Job Fair 123",
-                  style: context.bodyLarge,
-                ),
+                Text(event.name ?? '',
+                    style: context.bodyLarge, maxLines: 1, softWrap: true),
                 const SizedBox(height: 8),
                 Row(
                   children: [
@@ -76,7 +81,7 @@ class DrawerScreen extends StatelessWidget {
                       width: 5,
                     ),
                     Text(
-                      "01/01/2024 - 03/01/2024",
+                      "${event.startDate} - ${event.endDate}",
                       style: context.bodySmall,
                     ),
                   ],
@@ -96,7 +101,7 @@ class DrawerScreen extends StatelessWidget {
                       "Total Applicants: ",
                       style: context.bodySmall,
                     ),
-                    Text("200",
+                    Text("$interviewsCount",
                         style: TextStyle(
                             fontSize: context.bodySmall.fontSize,
                             color: context.primary)),
@@ -113,19 +118,27 @@ class DrawerScreen extends StatelessWidget {
                   onTap: () => cubit.navigateToPrivacyPolicy(context),
                   title: 'Privacy Policy',
                 ),
-                ToggleListItem(
-                    title: 'Language',
-                    value: cubit.isEnglish,
-                    strItems: const ['AR', 'EN'],
-                    callback: () => cubit.toggleLanguage(context)),
-                ToggleListItem(
-                    title: 'Theme Mode',
-                    value: cubit.isDarkMode,
-                    iconItems: const [
-                      CupertinoIcons.sun_max,
-                      CupertinoIcons.moon
-                    ],
-                    callback: () => cubit.toggleDarkMode(context)),
+                BlocBuilder<DrawerCubit, DrawerState>(
+                  builder: (context, state) {
+                    return ToggleListItem(
+                        title: 'Language',
+                        value: cubit.isEnglish,
+                        strItems: const ['AR', 'EN'],
+                        callback: () => cubit.toggleLanguage(context));
+                  },
+                ),
+                BlocBuilder<DrawerCubit, DrawerState>(
+                  builder: (context, state) {
+                    return ToggleListItem(
+                        title: 'Theme Mode',
+                        value: cubit.isDarkMode,
+                        iconItems: const [
+                          CupertinoIcons.sun_max,
+                          CupertinoIcons.moon
+                        ],
+                        callback: () => cubit.toggleDarkMode(context));
+                  },
+                ),
                 DrawerItemView(
                     title: 'Logout', onTap: () => cubit.logout(context)),
               ],
@@ -144,6 +157,7 @@ class DrawerToggleItem extends StatelessWidget {
     required this.value,
     required this.callback,
   });
+
   final String title;
   final bool value;
   final VoidCallback callback;

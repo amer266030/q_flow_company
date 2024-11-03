@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:q_flow_company/mangers/data_mgr.dart';
 import 'package:q_flow_company/supabase/supabase_company.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../model/user/company.dart';
 import '../../theme_data/app_theme_cubit.dart';
 import 'package:get_it/get_it.dart';
@@ -24,8 +25,35 @@ class DrawerCubit extends Cubit<DrawerState> {
   var dataMgr = GetIt.I.get<DataMgr>();
   Company? company;
 
-  initialLoad(BuildContext context) {
+  initialLoad(BuildContext context) async {
     company = dataMgr.company;
+
+    final prefs = await SharedPreferences.getInstance();
+    final savedTheme = prefs.getString('theme');
+    isDarkMode = (savedTheme == ThemeMode.dark.toString());
+    final savedLocale = prefs.getString('locale');
+    isEnglish = (savedLocale == 'en_US');
+
+    print('initial Load was called ${isDarkMode}');
+
+    emitUpdate();
+  }
+
+  void toggleLanguage(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    isEnglish = !isEnglish;
+    await prefs.setString('locale', isEnglish ? 'en_US' : 'ar_SA');
+    if (context.mounted) {
+      context.setLocale(
+          isEnglish ? const Locale('en', 'US') : const Locale('ar', 'SA'));
+    }
+    emitUpdate();
+  }
+
+  void toggleDarkMode(BuildContext context) {
+    isDarkMode = !isDarkMode;
+    final themeCubit = context.read<AppThemeCubit>();
+    themeCubit.changeTheme(isDarkMode ? ThemeMode.light : ThemeMode.dark);
     emitUpdate();
   }
 
@@ -48,25 +76,6 @@ class DrawerCubit extends Cubit<DrawerState> {
 
   navigateToPrivacyPolicy(BuildContext context) => Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => const PrivacyPolicyScreen()));
-
-  void toggleLanguage(BuildContext context) {
-    isEnglish = !isEnglish;
-    context.setLocale(
-        isEnglish ? const Locale('en', 'US') : const Locale('ar', 'SA'));
-    _saveLocale(isEnglish);
-  }
-
-  void toggleDarkMode(BuildContext context) {
-    isDarkMode = !isDarkMode;
-    final themeCubit = context.read<AppThemeCubit>();
-    themeCubit.changeTheme(isDarkMode ? ThemeMode.light : ThemeMode.dark);
-    emitUpdate();
-  }
-
-  Future<void> _saveLocale(bool isEnglish) async {
-    // final prefs = await SharedPreferences.getInstance();
-    // await prefs.setString('locale', isEnglish ? 'true' : 'false');
-  }
 
   navigateToOnBoarding(BuildContext context) =>
       Navigator.of(context).pushAndRemoveUntil(

@@ -1,4 +1,3 @@
-import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:q_flow_company/extensions/screen_size.dart';
@@ -10,6 +9,7 @@ import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
 
 import '../../model/enums/queue_status.dart';
 import '../../model/enums/visitor_status.dart';
+import '../../model/event/event.dart';
 import '../../reusable_components/button/expanded_toggle_buttons.dart';
 import '../../reusable_components/button/primary_btn.dart';
 import '../../reusable_components/cards/swiper_card.dart';
@@ -48,7 +48,15 @@ class HomeScreen extends StatelessWidget {
             appBar: AppBarView(
               companyName: cubit.dataMgr.company?.name ?? '',
             ),
-            drawer: const DrawerScreen(),
+            drawer: BlocBuilder<HomeCubit, HomeState>(
+              builder: (context, state) {
+                return DrawerScreen(
+                  company: cubit.company,
+                  event: cubit.selectedEvent ?? Event(),
+                  interviewsCount: cubit.interviews.length,
+                );
+              },
+            ),
             body: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),

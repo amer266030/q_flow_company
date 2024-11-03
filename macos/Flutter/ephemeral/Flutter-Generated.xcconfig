@@ -1,12 +1,11 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/Users/yara/Developer/flutter
-FLUTTER_APPLICATION_PATH=/Users/yara/q_flow_p/q_flow_company
+FLUTTER_ROOT=/Users/abu_mukhlef/Developer/flutter
+FLUTTER_APPLICATION_PATH=/Users/abu_mukhlef/Documents/GitHub/q_flow_company
 COCOAPODS_PARALLEL_CODE_SIGN=true
-FLUTTER_TARGET=/Users/yara/q_flow_p/q_flow_company/lib/main.dart
 FLUTTER_BUILD_DIR=build
 FLUTTER_BUILD_NAME=0.1.0
 FLUTTER_BUILD_NUMBER=0.1.0
 DART_OBFUSCATION=false
 TRACK_WIDGET_CREATION=true
 TREE_SHAKE_ICONS=false
-PACKAGE_CONFIG=/Users/yara/q_flow_p/q_flow_company/.dart_tool/package_config.json
+PACKAGE_CONFIG=.dart_tool/package_config.json

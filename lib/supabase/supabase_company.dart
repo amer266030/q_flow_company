@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:get_it/get_it.dart';
 import 'package:q_flow_company/mangers/data_mgr.dart';
+import 'package:q_flow_company/model/bookmarks/bookmarked_visitor.dart';
 import 'package:q_flow_company/model/user/company.dart';
 import 'package:q_flow_company/supabase/client/supabase_mgr.dart';
 import 'package:q_flow_company/utils/img_converter.dart';
@@ -16,38 +17,50 @@ class SupabaseCompany {
   static const String bucketKey = "company_logo";
   static final dataMgr = GetIt.I.get<DataMgr>();
 
-  static Future<Company>? fetchCompany() async {
-    var companyId = supabase.auth.currentUser?.id ?? '';
-    try {
-      final response = await supabase
-          .from(tableKey)
-          .select('*, social_link(*), skill(*)')
-          .eq('id', companyId)
-          .single();
+  static Future<Company?> fetchCompany() async {
+    var companyId = supabase.auth.currentUser?.id;
+    if (companyId != null) {
+      try {
+        final response = await supabase
+            .from(tableKey)
+            .select('*, social_link(*), bookmarked_visitor(*), skill(*)')
+            .eq('id', companyId)
+            .maybeSingle();
 
-      final company = Company.fromJson(response);
+        if (response == null) return null;
 
-      dataMgr.saveCompanyData(company: company);
+        final company = Company.fromJson(response);
 
-      if (response['social_link'] != null) {
-        company.socialLinks = (response['social_link'] as List)
-            .map((link) => SocialLink.fromJson(link))
-            .toList();
+        dataMgr.saveCompanyData(company: company);
+
+        if (response['social_link'] != null) {
+          company.socialLinks = (response['social_link'] as List)
+              .map((link) => SocialLink.fromJson(link))
+              .toList();
+        }
+
+        if (response['bookmarked_visitor'] != null) {
+          company.bookmarkedVisitors = (response['bookmarked_visitor'] as List?)
+              ?.map((bm) => BookmarkedVisitor.fromJson(bm))
+              .toList();
+        }
+
+        if (response['skill'] != null) {
+          company.skills = (response['skill'] as List)
+              .map((skill) => Skill.fromJson(skill))
+              .toList();
+        }
+
+        return company;
+      } on AuthException catch (_) {
+        rethrow;
+      } on PostgrestException catch (_) {
+        rethrow;
+      } catch (e) {
+        rethrow;
       }
-
-      if (response['skill'] != null) {
-        company.skills = (response['skill'] as List)
-            .map((skill) => Skill.fromJson(skill))
-            .toList();
-      }
-
-      return company;
-    } on AuthException catch (_) {
-      rethrow;
-    } on PostgrestException catch (_) {
-      rethrow;
-    } catch (e) {
-      rethrow;
+    } else {
+      return null;
     }
   }
 
@@ -57,10 +70,15 @@ class SupabaseCompany {
       company.logoUrl = await uploadLogo(logoFile, company.name ?? '1234');
     }
     try {
-      final response = await supabase.from(tableKey).insert(company.toJson());
+      final response = await supabase
+          .from(tableKey)
+          .insert(company.toJson())
+          .select()
+          .single();
+      ;
       dataMgr.saveCompanyData(company: company);
 
-      return response;
+      return Company.fromJson(response);
     } on AuthException catch (_) {
       rethrow;
     } on PostgrestException catch (_) {
@@ -81,9 +99,11 @@ class SupabaseCompany {
       final response = await supabase
           .from(tableKey)
           .update(company.toJson())
-          .eq('id', companyId);
+          .eq('id', companyId)
+          .select()
+          .single();
       dataMgr.saveCompanyData(company: company);
-      return response;
+      return Company.fromJson(response);
     } on AuthException catch (_) {
       rethrow;
     } on PostgrestException catch (_) {

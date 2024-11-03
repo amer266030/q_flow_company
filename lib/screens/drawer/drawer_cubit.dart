@@ -14,6 +14,7 @@ import '../privacy_policy_screen.dart';
 part 'drawer_state.dart';
 
 class DrawerCubit extends Cubit<DrawerState> {
+  DrawerState? previousState;
   DrawerCubit(BuildContext context) : super(DrawerInitial()) {
     initialLoad(context);
   }
@@ -67,11 +68,19 @@ class DrawerCubit extends Cubit<DrawerState> {
     // await prefs.setString('locale', isEnglish ? 'true' : 'false');
   }
 
-  logout(BuildContext context) async {
-    await dataMgr.logout();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const OnboardingScreen()));
+  navigateToOnBoarding(BuildContext context) =>
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const OnboardingScreen()),
+        (route) => false,
+      );
+
+  @override
+  void emit(DrawerState state) {
+    previousState = this.state;
+    super.emit(state);
   }
 
+  emitLoading() => emit(LoadingState());
   emitUpdate() => emit(UpdateUIState());
+  emitError(String msg) => emit(ErrorState(msg));
 }

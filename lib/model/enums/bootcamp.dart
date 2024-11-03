@@ -12,7 +12,7 @@ enum Bootcamp {
   swift,
   aws,
   dataScience,
-  springBoot,
+  springBoot;
 }
 
 extension BootcampExtension on Bootcamp {

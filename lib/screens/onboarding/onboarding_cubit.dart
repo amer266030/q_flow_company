@@ -6,6 +6,7 @@ import 'package:q_flow_company/mangers/data_mgr.dart';
 import 'package:q_flow_company/screens/edit_details/edit_details_screen.dart';
 import 'package:q_flow_company/screens/home/home_screen.dart';
 import 'package:q_flow_company/supabase/client/supabase_mgr.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../extensions/img_ext.dart';
 import '../auth/auth_screen.dart';
@@ -13,6 +14,7 @@ import '../auth/auth_screen.dart';
 part 'onboarding_state.dart';
 
 class OnboardingCubit extends Cubit<OnboardingState> {
+  OnboardingState? previousState;
   OnboardingCubit(BuildContext context) : super(OnboardingInitial()) {
     initialLoad(context);
   }
@@ -20,12 +22,17 @@ class OnboardingCubit extends Cubit<OnboardingState> {
 
   initialLoad(BuildContext context) async {
     var dataMgr = GetIt.I.get<DataMgr>();
-    await dataMgr.fetchData();
-    if (dataMgr.company != null) {
-      navigateToHome(context);
-    } else if (SupabaseMgr.shared.currentUser != null) {
-      await Future.delayed(const Duration(seconds: 1));
-      if (context.mounted) navigateToEditCompany(context);
+    try {
+      await dataMgr.fetchData();
+
+      if (dataMgr.company != null) {
+        if (context.mounted) navigateToHome(context);
+      } else if (SupabaseMgr.shared.currentUser != null) {
+        await Future.delayed(const Duration(milliseconds: 50));
+        if (context.mounted) navigateToEditCompany(context);
+      }
+    } catch (e) {
+      emitError(e.toString());
     }
   }
 
@@ -59,4 +66,14 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       'Stay informed with instant notifications on interview schedules.'
     )
   ];
+
+  @override
+  void emit(OnboardingState state) {
+    previousState = this.state;
+    super.emit(state);
+  }
+
+  emitUpdate() => emit(UpdateUIState());
+  emitLoading() => emit(LoadingState());
+  emitError(String msg) => emit(ErrorState(msg));
 }

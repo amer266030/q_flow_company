@@ -1,9 +1,13 @@
+import 'package:get_it/get_it.dart';
 import 'package:q_flow_company/supabase/client/supabase_mgr.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../mangers/data_mgr.dart';
 
 class SupabaseAuth {
   static final SupabaseClient supabase = SupabaseMgr.shared.supabase;
   static const invitationTableKey = 'event_invited_user';
+  static final dataMgr = GetIt.I.get<DataMgr>();
 
   static Future sendOTP(String email) async {
     try {
@@ -47,7 +51,7 @@ class SupabaseAuth {
   static Future signOut() async {
     try {
       var response = await supabase.auth.signOut();
-
+      dataMgr.company = null;
       return response;
     } catch (e) {
       rethrow;

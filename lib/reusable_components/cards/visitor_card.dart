@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:q_flow_company/theme_data/extensions/text_style_ext.dart';
 import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
 
+import '../../extensions/img_ext.dart';
 import '../../model/user/visitor.dart';
 import '../button/book_mark_btn.dart';
 import '../visitor_avatar.dart';
+import '../../model/enums/bootcamp.dart';
 
 class VisitorCard extends StatelessWidget {
   const VisitorCard({
@@ -43,11 +45,26 @@ class VisitorCard extends StatelessWidget {
                 flex: 2,
                 child: Row(
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Padding(
-                        padding: EdgeInsets.all(4),
-                        child:
-                            AspectRatio(aspectRatio: 1, child: VisitorAvatar()),
+                        padding: const EdgeInsets.all(4),
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: ClipOval(
+                            child: visitor.avatarUrl == null
+                                ? const VisitorAvatar()
+                                : FadeInImage(
+                                    placeholder: Img.logoPurple,
+                                    image: NetworkImage(visitor.avatarUrl!),
+                                    fit: BoxFit.contain,
+                                    imageErrorBuilder:
+                                        (context, error, stackTrace) {
+                                      return const Image(
+                                          image: Img.avatar, fit: BoxFit.cover);
+                                    },
+                                  ),
+                          ),
+                        ),
                       ),
                     ),
                     Expanded(
@@ -72,16 +89,12 @@ class VisitorCard extends StatelessWidget {
                                     softWrap: true),
                               ],
                             ),
-                            Text(visitor.id ?? '',
-                                style: TextStyle(
-                                    fontSize: context.bodySmall.fontSize,
-                                    color: context.textColor1),
+                            Text(visitor.id?.substring(0, 13) ?? '',
+                                style: context.bodySmall,
                                 maxLines: 3,
                                 softWrap: true),
-                            Text('Front end',
-                                style: TextStyle(
-                                    fontSize: context.bodySmall.fontSize,
-                                    color: context.textColor1),
+                            Text(visitor.bootcamp?.value ?? '',
+                                style: context.bodySmall,
                                 maxLines: 3,
                                 softWrap: true),
                           ],

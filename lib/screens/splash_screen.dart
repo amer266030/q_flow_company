@@ -14,7 +14,7 @@ class SplashScreen extends StatelessWidget {
 
     return AnimatedSplashScreen(
       duration: 2300,
-      splashIconSize: context.screenWidth * 0.8,
+      splashIconSize: context.screenWidth,
       splash: Image(
         image: isLightTheme ? Img.splashLight : Img.splashDark,
       ),

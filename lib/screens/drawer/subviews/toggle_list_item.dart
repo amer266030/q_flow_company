@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:q_flow_company/theme_data/extensions/text_style_ext.dart';
 import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
 
 import '../../../reusable_components/button/custom_icons_switch.dart';
@@ -28,11 +29,10 @@ class ToggleListItem extends StatelessWidget {
           Expanded(
             child: Row(
               children: [
-                Icon(CupertinoIcons.circle, color: context.textColor1),
                 const SizedBox(width: 8),
                 Text(
                   title,
-                  style: TextStyle(color: context.textColor1),
+                  style: context.bodyLarge,
                 ),
               ],
             ),

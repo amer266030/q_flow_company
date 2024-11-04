@@ -58,15 +58,15 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             body: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: BlocBuilder<HomeCubit, HomeState>(
-                  builder: (context, state) {
-                    return Column(
-                      children: [
-                        Theme(
-                          data: Theme.of(context)
-                              .copyWith(dividerColor: Colors.transparent),
+              child: BlocBuilder<HomeCubit, HomeState>(
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      Theme(
+                        data: Theme.of(context)
+                            .copyWith(dividerColor: Colors.transparent),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
                           child: ExpansionTile(
                             initiallyExpanded: true,
                             title: Text(
@@ -89,33 +89,35 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 16, bottom: 16, left: 16),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'Queue Status',
-                                  style: TextStyle(
-                                    fontSize: context.bodyLarge.fontSize,
-                                    fontWeight: FontWeight.bold,
-                                    color: context.textColor1,
-                                  ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Queue Status',
+                                style: TextStyle(
+                                  fontSize: context.bodyLarge.fontSize,
+                                  fontWeight: FontWeight.bold,
+                                  color: context.textColor1,
                                 ),
                               ),
-                              Expanded(
-                                child: ExpandedToggleButtons(
-                                    currentIndex: QueueStatus.values
-                                        .indexOf(cubit.selectedQueueStatus),
-                                    tabs: const ['Open', 'Close'],
-                                    callback: (value) => cubit
-                                        .toggleOpenApplying(context, value)),
-                              ),
-                            ],
-                          ),
+                            ),
+                            Expanded(
+                              child: ExpandedToggleButtons(
+                                  currentIndex: QueueStatus.values
+                                      .indexOf(cubit.selectedQueueStatus),
+                                  tabs: const ['Open', 'Close'],
+                                  callback: (value) =>
+                                      cubit.toggleOpenApplying(context, value)),
+                            ),
+                          ],
                         ),
-                        ExpandedToggleButtons(
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ExpandedToggleButtons(
                           currentIndex: VisitorStatus.values
                               .indexOf(cubit.selectedVisitorStatus),
                           tabs:
@@ -123,16 +125,16 @@ class HomeScreen extends StatelessWidget {
                           callback: (int value) =>
                               cubit.setSelectedStatus(value),
                         ),
-                        const SizedBox(height: 16),
-                        Expanded(
-                          child: cubit.selectedVisitorStatus ==
-                                  VisitorStatus.inQueue
-                              ? Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: CarouselView(
+                      ),
+                      const SizedBox(height: 16),
+                      Expanded(
+                        child: cubit.selectedVisitorStatus ==
+                                VisitorStatus.inQueue
+                            ? cubit.filteredVisitors.isNotEmpty
+                                ? CarouselView(
                                     backgroundColor: Colors.transparent,
-                                    itemExtent: context.screenWidth * 0.7,
-                                    shrinkExtent: context.screenWidth * 0.7,
+                                    itemExtent: context.screenWidth,
+                                    shrinkExtent: context.screenWidth,
                                     scrollDirection: Axis.horizontal,
                                     children: cubit.filteredVisitors
                                         .asMap()
@@ -154,35 +156,99 @@ class HomeScreen extends StatelessWidget {
                                               Text(
                                                 '${index + 1} / ${cubit.filteredVisitors.length}',
                                                 style: TextStyle(
-                                                    fontSize: context
-                                                        .titleSmall.fontSize,
-                                                    color: context.primary),
+                                                  fontSize: context
+                                                      .titleSmall.fontSize,
+                                                  color: context.primary,
+                                                ),
                                               ),
                                             ],
                                           ),
                                         ],
                                       );
                                     }).toList(),
-                                  ))
-                              : ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: cubit.filteredVisitors.length,
-                                  itemBuilder: (context, index) {
-                                    final visitor =
-                                        cubit.filteredVisitors[index];
-                                    return VisitorCard(
-                                      visitor: visitor,
-                                      isBookmarked:
-                                          cubit.checkBookmark(visitor.id ?? ''),
-                                      toggleBookmark: () =>
-                                          cubit.toggleBookmark(
-                                              context, visitor.id ?? ''),
-                                    );
-                                  },
-                                ),
-                        ),
-                        cubit.selectedVisitorStatus == VisitorStatus.inQueue
-                            ? Row(
+                                  )
+                                : Center(
+                                    child: Text(
+                                      'No visitors in the queue.',
+                                      style: TextStyle(
+                                        fontSize: context.bodyLarge.fontSize,
+                                        color: context.textColor1,
+                                      ),
+                                    ),
+                                  )
+                            : cubit.selectedVisitorStatus ==
+                                    VisitorStatus.applied
+                                ? cubit.filteredVisitors.isNotEmpty
+                                    ? ListView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount:
+                                            cubit.filteredVisitors.length,
+                                        itemBuilder: (context, index) {
+                                          final visitor =
+                                              cubit.filteredVisitors[index];
+                                          return VisitorCard(
+                                            visitor: visitor,
+                                            isBookmarked: cubit.checkBookmark(
+                                                visitor.id ?? ''),
+                                            toggleBookmark: () =>
+                                                cubit.toggleBookmark(
+                                              context,
+                                              visitor.id ?? '',
+                                            ),
+                                          );
+                                        },
+                                      )
+                                    : Center(
+                                        child: Text(
+                                          'No visitors applied.',
+                                          style: TextStyle(
+                                            fontSize:
+                                                context.bodyLarge.fontSize,
+                                            color: context.textColor1,
+                                          ),
+                                        ),
+                                      )
+                                : cubit.selectedVisitorStatus ==
+                                        VisitorStatus.saved
+                                    ? cubit.filteredVisitors.isNotEmpty
+                                        ? ListView.builder(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemCount:
+                                                cubit.filteredVisitors.length,
+                                            itemBuilder: (context, index) {
+                                              final visitor =
+                                                  cubit.filteredVisitors[index];
+                                              return VisitorCard(
+                                                visitor: visitor,
+                                                isBookmarked:
+                                                    cubit.checkBookmark(
+                                                        visitor.id ?? ''),
+                                                toggleBookmark: () =>
+                                                    cubit.toggleBookmark(
+                                                  context,
+                                                  visitor.id ?? '',
+                                                ),
+                                              );
+                                            },
+                                          )
+                                        : Center(
+                                            child: Text(
+                                              'No visitors saved.',
+                                              style: TextStyle(
+                                                fontSize:
+                                                    context.bodyLarge.fontSize,
+                                                color: context.textColor1,
+                                              ),
+                                            ),
+                                          )
+                                    : Container(),
+                      ),
+                      cubit.selectedVisitorStatus == VisitorStatus.inQueue
+                          ? Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
                                 children: [
                                   Expanded(
                                       child: PrimaryBtn(
@@ -191,12 +257,12 @@ class HomeScreen extends StatelessWidget {
                                                   context),
                                           title: "Start")),
                                 ],
-                              )
-                            : const Text("")
-                      ],
-                    );
-                  },
-                ),
+                              ),
+                            )
+                          : const Text("")
+                    ],
+                  );
+                },
               ),
             ),
           ),

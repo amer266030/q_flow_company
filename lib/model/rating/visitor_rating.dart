@@ -1,13 +1,13 @@
-class UserRating {
+class VisitorRating {
   String? id;
   String? companyId;
   String? visitorId;
   DateTime? ratingDate;
 
-  UserRating({this.id, this.companyId, this.visitorId, this.ratingDate});
+  VisitorRating({this.id, this.companyId, this.visitorId, this.ratingDate});
 
-  factory UserRating.fromJson(Map<String, dynamic> json) {
-    return UserRating(
+  factory VisitorRating.fromJson(Map<String, dynamic> json) {
+    return VisitorRating(
       id: json['id'] as String?,
       companyId: json['company_id'] as String?,
       visitorId: json['visitor_id'] as String?,

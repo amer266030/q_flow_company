@@ -56,23 +56,25 @@ class HomeCubit extends Cubit<HomeState> {
       _interviewController.add(initialInterviews);
       interviews = initialInterviews;
 
-      SupabaseInterview.interviewStream().listen((updatedInterviews) {
-        _interviewController.add(updatedInterviews);
-        interviews = updatedInterviews;
-        filterVisitors();
-        emitUpdate();
-      });
+      listenToStream();
 
       if (company.isQueueOpen != null) {
         selectedQueueStatus =
             company.isQueueOpen! ? QueueStatus.open : QueueStatus.close;
       }
-
-      filterVisitors();
     } catch (e) {
       emitError(e.toString());
     }
     emitUpdate();
+  }
+
+  listenToStream() {
+    SupabaseInterview.interviewStream().listen((updatedInterviews) {
+      _interviewController.add(updatedInterviews);
+      interviews = updatedInterviews;
+      filterVisitors();
+      emitUpdate();
+    });
   }
 
   @override
@@ -145,8 +147,17 @@ class HomeCubit extends Cubit<HomeState> {
     emitUpdate();
   }
 
-  navigateToVisitorDetails(BuildContext context) => Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => const VisitorDetailsScreen()));
+  navigateToVisitorDetails(BuildContext context) {
+    var upcomingInterviews =
+        interviews.where((i) => i.status == InterviewStatus.upcoming).toList();
+    Navigator.of(context)
+        .push(MaterialPageRoute(
+            builder: (context) =>
+                VisitorDetailsScreen(interview: upcomingInterviews.last)))
+        .then((_) {
+      listenToStream();
+    });
+  }
 
   @override
   void emit(HomeState state) {

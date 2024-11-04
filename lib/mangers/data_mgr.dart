@@ -1,14 +1,17 @@
+import 'package:q_flow_company/model/rating/visitor_rating_question.dart';
 import 'package:q_flow_company/model/user/visitor.dart';
 import 'package:q_flow_company/supabase/supabase_company.dart';
 import 'package:q_flow_company/supabase/supabase_event.dart';
 import '../model/event/event.dart';
 import '../model/user/company.dart';
+import '../supabase/supabase_rating.dart';
 import '../supabase/supabase_visitor.dart';
 
 class DataMgr {
   Company? company;
   List<Visitor> visitors = [];
   List<Event> events = [];
+  List<VisitorRatingQuestion> ratingQuestions = [];
 
   DataMgr() {
     // fetchData();
@@ -18,6 +21,7 @@ class DataMgr {
     await _fetchCompanyData();
     await _fetchVisitorsData();
     await _fetchEvents();
+    await _fetchRatingQuestions();
   }
   // Company Functions
 
@@ -44,6 +48,14 @@ class DataMgr {
   Future _fetchEvents() async {
     try {
       events = await SupabaseEvent.fetchEvents() ?? [];
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> _fetchRatingQuestions() async {
+    try {
+      ratingQuestions = await SupabaseRating.fetchQuestions() ?? [];
     } catch (e) {
       rethrow;
     }

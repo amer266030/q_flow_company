@@ -1,21 +1,21 @@
-class UserQuestionRating {
+class VisitorQuestionRating {
   String? id;
-  String? companyRatingId; // Foreign key to the CompanyRating
+  String? visitorRatingId; // Foreign key to the CompanyRating
   String? questionId; // Foreign key to CompanyRatingQuestion
   int? rating;
 
-  UserQuestionRating({
+  VisitorQuestionRating({
     this.id,
-    this.companyRatingId,
+    this.visitorRatingId,
     this.questionId,
     this.rating,
   });
 
   // Factory method to create an instance from JSON
-  factory UserQuestionRating.fromJson(Map<String, dynamic> json) {
-    return UserQuestionRating(
+  factory VisitorQuestionRating.fromJson(Map<String, dynamic> json) {
+    return VisitorQuestionRating(
       id: json['id'] as String?,
-      companyRatingId: json['company_rating_id'] as String?,
+      visitorRatingId: json['visitor_rating_id'] as String?,
       questionId: json['question_id'] as String?,
       rating: json['rating'] as int?,
     );
@@ -24,7 +24,7 @@ class UserQuestionRating {
   // Method to convert an instance to JSON
   Map<String, dynamic> toJson() {
     return {
-      'company_rating_id': companyRatingId,
+      'visitor_rating_id': visitorRatingId,
       'question_id': questionId,
       'rating': rating,
     };

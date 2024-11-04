@@ -1,6 +1,8 @@
+import '../bookmarks/bookmarked_company.dart';
 import '../enums/bootcamp.dart';
 import '../enums/experience.dart';
 import '../enums/gender.dart';
+import '../interview.dart';
 import '../skills/skill.dart';
 import '../social_links/social_link.dart';
 
@@ -16,6 +18,8 @@ class Visitor {
   String? avatarUrl;
   List<SocialLink>? socialLinks;
   List<Skill>? skills;
+  List<BookmarkedCompany>? bookmarkedCompanies;
+  List<Interview>? interviews;
 
   Visitor({
     this.id,
@@ -29,6 +33,8 @@ class Visitor {
     this.avatarUrl,
     this.socialLinks,
     this.skills,
+    this.bookmarkedCompanies,
+    this.interviews,
   });
 
   factory Visitor.fromJson(Map<String, dynamic> json) {
@@ -58,6 +64,11 @@ class Visitor {
               .map((link) => Skill.fromJson(link))
               .toList()
           : null,
+      bookmarkedCompanies: json['bookmarked_companies'] != null
+          ? (json['bookmarked_companies'] as List)
+              .map((link) => BookmarkedCompany.fromJson(link))
+              .toList()
+          : null,
     );
   }
 
@@ -73,6 +84,7 @@ class Visitor {
       'avatar_url': avatarUrl,
       // 'social_links': socialLinks?.map((link) => link.toJson()).toList(),
       // 'skills': skills?.map((skill) => skill.toJson()).toList(),
+      // 'bookmarkedCompanies': bookmarkedCompanies?.map((comp) => comp.toJson()).toList(),
     };
   }
 }

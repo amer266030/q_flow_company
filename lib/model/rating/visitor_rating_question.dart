@@ -1,13 +1,13 @@
-class UserRatingQuestion {
+class VisitorRatingQuestion {
   String? id;
   String? title;
   String? text;
   int? sortOrder;
 
-  UserRatingQuestion({this.id, this.title, this.text, this.sortOrder});
+  VisitorRatingQuestion({this.id, this.title, this.text, this.sortOrder});
 
-  factory UserRatingQuestion.fromJson(Map<String, dynamic> json) {
-    return UserRatingQuestion(
+  factory VisitorRatingQuestion.fromJson(Map<String, dynamic> json) {
+    return VisitorRatingQuestion(
       id: json['id'] as String?,
       title: json['title'] as String?,
       text: json['text'] as String?,

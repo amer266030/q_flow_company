@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:q_flow_company/theme_data/extensions/text_style_ext.dart';
 import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
 
-class VisitorRatingBuild extends StatelessWidget {
-  const VisitorRatingBuild({
+class StarRatingView extends StatelessWidget {
+  const StarRatingView({
     super.key,
     required this.title,
+    required this.text,
     required this.selectedRating,
     required this.setRating,
   });
   final String title;
+  final String text;
   final int selectedRating;
   final Function(double) setRating;
 
@@ -19,11 +20,21 @@ class VisitorRatingBuild extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text('$title: ',
-            style: TextStyle(
-              fontSize: context.bodyMedium.fontSize,
-              fontWeight: FontWeight.bold,
-            )),
+        Expanded(
+          child: Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                    text: '$title: ',
+                    style: TextStyle(
+                      fontSize: context.bodyMedium.fontSize,
+                      fontWeight: FontWeight.bold,
+                    )),
+              ],
+            ),
+            softWrap: true,
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Row(
@@ -37,7 +48,7 @@ class VisitorRatingBuild extends StatelessWidget {
                 starSpacing: 8,
                 maxValueVisibility: true,
                 valueLabelVisibility: false,
-                animationDuration: const Duration(milliseconds: 500),
+                animationDuration: Duration(milliseconds: 500),
                 valueLabelPadding:
                     const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
                 valueLabelMargin: const EdgeInsets.only(right: 8),

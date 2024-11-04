@@ -47,16 +47,25 @@ class SupabaseInterview {
     }
   }
 
-  static Future<List<String>> fetchScheduledInterviewIds(
-      String companyId) async {
-    final response = await SupabaseMgr.shared.supabase
-        .from(tableKey)
-        .select('id')
-        .eq('company_id', companyId)
-        .eq('status', 'Upcoming');
+  static Future updateInterview(Interview interview) async {
+    try {
+      if (interview.id == null) {
+        throw Exception('Could not find an interview to update');
+      }
+      final response = await supabase
+          .from(tableKey)
+          .update(interview.toJson())
+          .eq('id', interview.id!)
+          .select()
+          .single();
 
-    return (response as List)
-        .map((interview) => interview['id'] as String)
-        .toList();
+      return Interview.fromJson(response);
+    } on AuthException catch (_) {
+      rethrow;
+    } on PostgrestException catch (_) {
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
   }
 }

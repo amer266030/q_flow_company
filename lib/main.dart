@@ -8,10 +8,13 @@ import 'package:q_flow_company/screens/home/home_screen.dart';
 import 'package:q_flow_company/screens/onboarding/onboarding_screen.dart';
 import 'package:q_flow_company/screens/position_opening/position_opening_screen.dart';
 import 'package:q_flow_company/screens/splash_screen.dart';
+import 'package:q_flow_company/screens/visitor_details.dart/visitor_details_screen.dart';
 import 'package:q_flow_company/services/di_container.dart';
 import 'package:q_flow_company/supabase/client/supabase_mgr.dart';
 import 'package:q_flow_company/theme_data/app_theme_cubit.dart';
 import 'package:q_flow_company/theme_data/app_themes.dart';
+
+import 'model/user/visitor.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

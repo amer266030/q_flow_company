@@ -1,70 +1,110 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/cupertino.dart';
+import 'package:get_it/get_it.dart';
+import 'package:q_flow_company/mangers/data_mgr.dart';
+import 'package:q_flow_company/model/rating/visitor_rating_question.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../model/enums/tech_skill.dart';
-import '../../model/enums/visitor_rating.dart';
+import '../../model/interview.dart';
+import '../../model/user/visitor.dart';
 
 part 'visitor_details_state.dart';
 
 class VisitorDetailsCubit extends Cubit<VisitorDetailsState> {
-  VisitorDetailsCubit() : super(VisitorDetailsInitial()) {
-    initialLoad();
+  VisitorDetailsState? previousState;
+  VisitorDetailsCubit(Interview interview) : super(VisitorDetailsInitial()) {
+    initialLoad(interview);
   }
+
   final commentController = TextEditingController();
-  Map<VisitorRating, double> ratings = {
-    VisitorRating.technicalSkills: 0,
-    VisitorRating.softSkills: 0,
-    VisitorRating.jobSkills: 0,
-  };
-  void setRating(VisitorRating rating, double value) {
-    ratings[rating] = value;
-    emitUpdateUI();
+
+  final dataMgr = GetIt.I.get<DataMgr>();
+  Visitor? visitor;
+  var interview = Interview();
+  List<VisitorRatingQuestion> questions = [];
+  List<int> ratings = [];
+
+  // Interview Stream with initial value
+  static final _interviewController =
+      StreamController<List<Interview>>.broadcast();
+  static Stream<List<Interview>> get interviewStream =>
+      _interviewController.stream;
+  List<Interview> interviews = [];
+
+  initialLoad(Interview interview) {
+    this.interview = interview;
+    visitor = getVisitor();
+    questions = dataMgr.ratingQuestions;
+    ratings = List.generate(questions.length, (index) => 1);
+    emitUpdate();
+  }
+
+  Visitor? getVisitor() {
+    return dataMgr.visitors
+        .where((v) => v.id == interview.visitorId)
+        .toList()
+        .firstOrNull;
+  }
+
+  void setRating(int idx, double rating) {
+    ratings[idx] = rating.round();
+    emitUpdate();
   }
 
   navigateBack(BuildContext context) => Navigator.of(context).pop();
-  List<TechSkill> skills = [];
 
-  initialLoad() {
-    skills = TechSkill.values.sublist(0, 5);
-    emitUpdateUI();
-  }
-
-// call and email need to be test on phone
   Future<void> launchCall(String phoneNumber) async {
-    final Uri urlParsed = Uri.parse('tel:$phoneNumber');
+    try {
+      final Uri urlParsed = Uri.parse('tel:$phoneNumber');
 
-    if (await canLaunchUrl(urlParsed)) {
-      await launchUrl(urlParsed);
-    } else {
-      throw 'Could not launch call to: $phoneNumber';
+      if (await canLaunchUrl(urlParsed)) {
+        await launchUrl(urlParsed);
+      } else {
+        throw 'Could not launch call to: $phoneNumber';
+      }
+    } catch (e) {
+      emitError(e.toString());
     }
   }
 
   Future<void> launchEmail(String visitorEmail) async {
-    final String email = Uri.encodeComponent(visitorEmail);
-    final Uri mail = Uri.parse("mailto:$email");
-
     try {
+      final String email = Uri.encodeComponent(visitorEmail);
+      final Uri mail = Uri.parse("mailto:$email");
+
       final bool launched = await launchUrl(mail);
       if (launched) {
       } else {
         throw Exception('Could not launch email app');
       }
     } catch (e) {
-      throw Exception('Error launching email: $e');
+      emitError(e.toString());
     }
   }
 
   Future<void> launchLink(String url) async {
-    final Uri uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      throw Exception('Could not launch $url');
+    try {
+      final Uri uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        throw Exception('Could not launch $url');
+      }
+    } catch (e) {
+      emitError(e.toString());
     }
   }
 
-  emitUpdateUI() => emit(UpdateUIState());
+  @override
+  void emit(VisitorDetailsState state) {
+    previousState = this.state;
+    super.emit(state);
+  }
+
+  emitUpdate() => emit(UpdateUIState());
+  emitError(String msg) => emit(ErrorState(msg));
+  emitLoading() => emit(LoadingState());
 }

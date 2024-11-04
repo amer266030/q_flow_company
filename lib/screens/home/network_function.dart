@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:q_flow_company/model/bookmarks/bookmarked_visitor.dart';
 import 'package:q_flow_company/screens/home/home_cubit.dart';
 import 'package:q_flow_company/supabase/supabase_company.dart';
 import 'package:q_flow_company/supabase/supabase_interview.dart';
 
-import '../../mangers/data_mgr.dart';
 import '../../supabase/supabase_bookmark.dart';
 
 extension NetworkFunctions on HomeCubit {
@@ -15,22 +13,22 @@ extension NetworkFunctions on HomeCubit {
       var response = await SupabaseInterview.fetchInterviews();
       return response;
     } catch (e) {
-      emitError("Error loading interviews:\n$e");
+      emitError("Error loading interviews:\n${e.toString()}");
     }
   }
 
   Future fetchCompanyDetails() async {
     try {
       emitLoading();
-      var companies = await SupabaseCompany.fetchCompany();
-      return companies;
+      var response = await SupabaseCompany.fetchCompany();
+      return response;
     } catch (e) {
-      emitError("Error loading company details:\n$e");
+      emitError("Error loading company details:\n${e.toString()}");
     }
   }
 
   Future updateCompany(BuildContext context, bool currentQueueStatus) async {
-    var company = GetIt.I.get<DataMgr>().company;
+    var company = dataMgr.company;
 
     try {
       emitLoading();

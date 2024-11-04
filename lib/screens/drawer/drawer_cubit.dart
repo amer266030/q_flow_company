@@ -34,8 +34,6 @@ class DrawerCubit extends Cubit<DrawerState> {
     final savedLocale = prefs.getString('locale');
     isEnglish = (savedLocale == 'en_US');
 
-    print('initial Load was called ${isDarkMode}');
-
     emitUpdate();
   }
 

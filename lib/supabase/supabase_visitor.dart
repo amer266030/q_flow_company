@@ -1,12 +1,9 @@
-import 'dart:io';
-
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../mangers/data_mgr.dart';
 import '../model/social_links/social_link.dart';
 import '../model/user/visitor.dart';
-import '../utils/img_converter.dart';
 import 'client/supabase_mgr.dart';
 
 class SupabaseVisitor {

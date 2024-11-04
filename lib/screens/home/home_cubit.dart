@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -6,6 +8,7 @@ import 'package:q_flow_company/model/enums/interview_status.dart';
 
 import 'package:q_flow_company/model/user/company.dart';
 import 'package:q_flow_company/screens/home/network_function.dart';
+import 'package:q_flow_company/supabase/supabase_interview.dart';
 
 import '../../model/enums/queue_status.dart';
 import '../../model/enums/visitor_status.dart';
@@ -29,9 +32,15 @@ class HomeCubit extends Cubit<HomeState> {
   var company = Company();
   List<Visitor> visitors = [];
   List<Visitor> filteredVisitors = [];
-  List<Interview> interviews = [];
   VisitorStatus selectedVisitorStatus = VisitorStatus.inQueue;
   QueueStatus selectedQueueStatus = QueueStatus.close;
+
+  // Interview Stream with initial value
+  static final _interviewController =
+      StreamController<List<Interview>>.broadcast();
+  static Stream<List<Interview>> get interviewStream =>
+      _interviewController.stream;
+  List<Interview> interviews = [];
 
   double queueLimit = 10;
 
@@ -42,7 +51,17 @@ class HomeCubit extends Cubit<HomeState> {
       visitors = dataMgr.visitors;
       events = dataMgr.events;
       if (events.isNotEmpty) selectedEvent = events.first;
-      interviews = await fetchInterviews();
+
+      final initialInterviews = await SupabaseInterview.fetchInterviews();
+      _interviewController.add(initialInterviews);
+      interviews = initialInterviews;
+
+      SupabaseInterview.interviewStream().listen((updatedInterviews) {
+        _interviewController.add(updatedInterviews);
+        interviews = updatedInterviews;
+        filterVisitors();
+        emitUpdate();
+      });
 
       if (company.isQueueOpen != null) {
         selectedQueueStatus =
@@ -54,6 +73,12 @@ class HomeCubit extends Cubit<HomeState> {
       emitError(e.toString());
     }
     emitUpdate();
+  }
+
+  @override
+  Future<void> close() async {
+    await _interviewController.close();
+    return super.close();
   }
 
   void selectEvent(String eventName) {

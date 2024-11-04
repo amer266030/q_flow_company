@@ -12,6 +12,24 @@ class SupabaseInterview {
   static const String tableKey = 'interview';
   static final dataMgr = GetIt.I.get<DataMgr>();
 
+  static Stream<List<Interview>> interviewStream() {
+    try {
+      var companyId = supabase.auth.currentUser?.id;
+      if (companyId == null) throw Exception("Company ID not found");
+
+      return supabase
+          .from(tableKey)
+          .stream(primaryKey: ['id'])
+          .eq('company_id', companyId)
+          .order('created_at', ascending: false)
+          .map((data) {
+            return data.map((json) => Interview.fromJson(json)).toList();
+          });
+    } catch (e) {
+      return const Stream<List<Interview>>.empty();
+    }
+  }
+
   static Future<List<Interview>> fetchInterviews() async {
     var companyId = supabase.auth.currentUser?.id;
     if (companyId == null) throw Exception("Company ID not found");

@@ -8,6 +8,7 @@ import 'package:q_flow_company/supabase/client/supabase_mgr.dart';
 import 'package:q_flow_company/utils/img_converter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../model/interview.dart';
 import '../model/skills/skill.dart';
 import '../model/social_links/social_link.dart';
 
@@ -23,7 +24,8 @@ class SupabaseCompany {
       try {
         final response = await supabase
             .from(tableKey)
-            .select('*, social_link(*), bookmarked_visitor(*), skill(*)')
+            .select(
+                '*, social_link(*), bookmarked_visitor(*), interview(*), skill(*)')
             .eq('id', companyId)
             .maybeSingle();
 
@@ -42,6 +44,12 @@ class SupabaseCompany {
         if (response['bookmarked_visitor'] != null) {
           company.bookmarkedVisitors = (response['bookmarked_visitor'] as List?)
               ?.map((bm) => BookmarkedVisitor.fromJson(bm))
+              .toList();
+        }
+
+        if (response['interview'] != null) {
+          company.interviews = (response['interview'] as List)
+              .map((skill) => Interview.fromJson(skill))
               .toList();
         }
 

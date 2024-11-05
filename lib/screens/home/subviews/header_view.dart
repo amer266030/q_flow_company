@@ -44,7 +44,7 @@ class HeaderView extends StatelessWidget {
                   child: logoUrl == null
                       ? const Image(image: Img.logoPurple, fit: BoxFit.cover)
                       : FadeInImage(
-                          placeholder: Img.logo,
+                          placeholder: Img.logoPurple,
                           image: NetworkImage(logoUrl!),
                           fit: BoxFit.cover,
                           imageErrorBuilder: (context, error, stackTrace) {

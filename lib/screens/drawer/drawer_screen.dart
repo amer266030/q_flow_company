@@ -46,7 +46,7 @@ class DrawerScreen extends StatelessWidget {
                                 ? const Image(
                                     image: Img.logoPurple, fit: BoxFit.cover)
                                 : FadeInImage(
-                                    placeholder: Img.logo,
+                                    placeholder: Img.logoPurple,
                                     image: NetworkImage(
                                         cubit.dataMgr.company!.logoUrl!),
                                     fit: BoxFit.cover,

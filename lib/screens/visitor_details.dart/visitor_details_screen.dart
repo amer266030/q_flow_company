@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:q_flow_company/model/enums/interview_status.dart';
+import 'package:get_it/get_it.dart';
+import 'package:q_flow_company/mangers/notifications_mgr.dart';
 import 'package:q_flow_company/model/enums/tech_skill.dart';
 import 'package:q_flow_company/screens/visitor_details.dart/network_functions.dart';
 
@@ -13,6 +14,7 @@ import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
 import '../../extensions/img_ext.dart';
 import '../../mangers/alert_manger.dart';
 
+import '../../mangers/data_mgr.dart';
 import '../../model/interview.dart';
 import '../../model/user/visitor.dart';
 import '../../reusable_components/button/book_mark_btn.dart';

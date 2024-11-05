@@ -153,7 +153,7 @@ class HomeCubit extends Cubit<HomeState> {
     Navigator.of(context)
         .push(MaterialPageRoute(
             builder: (context) =>
-                VisitorDetailsScreen(interview: upcomingInterviews.last)))
+                VisitorDetailsScreen(interview: upcomingInterviews.first)))
         .then((_) {
       listenToStream();
     });

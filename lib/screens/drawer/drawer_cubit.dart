@@ -20,7 +20,7 @@ class DrawerCubit extends Cubit<DrawerState> {
     initialLoad(context);
   }
   bool isDarkMode = true;
-  bool isEnglish = false;
+  bool isEnglish = true;
 
   var dataMgr = GetIt.I.get<DataMgr>();
   Company? company;

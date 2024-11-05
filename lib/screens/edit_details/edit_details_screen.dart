@@ -228,25 +228,21 @@ class _ImgView extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ClipOval(
-          child: Container(
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-            ),
-            width: 140,
-            height: 140,
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              ),
-              elevation: 5,
-              child: ClipOval(
-                child: cubit.logoFile != null
-                    ? Image.file(cubit.logoFile!, fit: BoxFit.cover)
-                    : company?.logoUrl == null
-                        ? const Image(image: Img.logo, fit: BoxFit.cover)
-                        : Image.network(company!.logoUrl!, fit: BoxFit.cover),
-              ),
+        Container(
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+          ),
+          width: 140,
+          height: 140,
+          child: Card(
+            elevation: 9,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: cubit.logoFile != null
+                  ? Image.file(cubit.logoFile!, fit: BoxFit.cover)
+                  : company?.logoUrl == null
+                      ? const Image(image: Img.logo, fit: BoxFit.cover)
+                      : Image.network(company!.logoUrl!, fit: BoxFit.cover),
             ),
           ),
         ),

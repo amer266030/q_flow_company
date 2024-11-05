@@ -17,12 +17,10 @@ class DrawerScreen extends StatelessWidget {
     super.key,
     required this.company,
     required this.event,
-    required this.interviewsCount,
   });
 
   final Company company;
   final Event event;
-  final int interviewsCount;
 
   @override
   Widget build(BuildContext context) {
@@ -35,37 +33,32 @@ class DrawerScreen extends StatelessWidget {
             child: ListView(
               padding: const EdgeInsets.all(16),
               children: [
-                AspectRatio(
-                  aspectRatio: 2,
-                  child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 65),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              spreadRadius: 2,
-                              blurRadius: 8,
-                              blurStyle: BlurStyle.outer),
-                        ],
-                      ),
-                      child: cubit.dataMgr.company?.logoUrl == null
-                          ? const Image(image: Img.logo, fit: BoxFit.contain)
-                          : ClipOval(
-                              child: FadeInImage(
-                                placeholder: Img.logo,
-                                image: NetworkImage(
-                                    cubit.dataMgr.company!.logoUrl!),
-                                fit: BoxFit.cover,
-                                imageErrorBuilder:
-                                    (context, error, stackTrace) {
-                                  return Image(
-                                      image: Img.logo, fit: BoxFit.cover);
-                                },
-                              ),
-                            )),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 60.0, vertical: 8),
+                  child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Card(
+                        elevation: 4,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: cubit.dataMgr.company?.logoUrl == null
+                                ? const Image(
+                                    image: Img.logoPurple, fit: BoxFit.cover)
+                                : FadeInImage(
+                                    placeholder: Img.logoPurple,
+                                    image: NetworkImage(
+                                        cubit.dataMgr.company!.logoUrl!),
+                                    fit: BoxFit.cover,
+                                    imageErrorBuilder:
+                                        (context, error, stackTrace) {
+                                      return Image(
+                                          image: Img.logoPurple,
+                                          fit: BoxFit.cover);
+                                    },
+                                  )),
+                      )),
                 ),
-                const SizedBox(height: 8),
                 Align(
                   alignment: Alignment.center,
                   child: Text(cubit.dataMgr.company?.name ?? '',
@@ -94,26 +87,6 @@ class DrawerScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Icon(
-                      CupertinoIcons.person_3_fill,
-                      color: context.textColor3,
-                      size: 21,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      "Total Applicants: ",
-                      style: context.bodySmall,
-                    ),
-                    Text("$interviewsCount",
-                        style: TextStyle(
-                            fontSize: context.bodySmall.fontSize,
-                            color: context.primary)),
-                  ],
-                ),
                 Divider(
                   color: context.bg3,
                 ),

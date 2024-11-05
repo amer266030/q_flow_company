@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:q_flow_company/extensions/screen_size.dart';
 
-import 'package:q_flow_company/screens/home/subviews/app_bar_view.dart';
+import 'package:q_flow_company/screens/home/subviews/header_view.dart';
 import 'package:q_flow_company/screens/home/subviews/filter_item_view.dart';
 import 'package:q_flow_company/theme_data/extensions/text_style_ext.dart';
 import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
@@ -45,15 +45,11 @@ class HomeScreen extends StatelessWidget {
             }
           },
           child: Scaffold(
-            appBar: AppBarView(
-              companyName: cubit.dataMgr.company?.name ?? '',
-            ),
             drawer: BlocBuilder<HomeCubit, HomeState>(
               builder: (context, state) {
                 return DrawerScreen(
                   company: cubit.company,
                   event: cubit.selectedEvent ?? Event(),
-                  interviewsCount: cubit.interviews.length,
                 );
               },
             ),
@@ -62,6 +58,11 @@ class HomeScreen extends StatelessWidget {
                 builder: (context, state) {
                   return Column(
                     children: [
+                      HeaderView(
+                        logoUrl: cubit.dataMgr.company?.logoUrl,
+                        companyName: cubit.dataMgr.company?.name ?? '',
+                        interviewsCount: cubit.interviews.length,
+                      ),
                       Theme(
                         data: Theme.of(context)
                             .copyWith(dividerColor: Colors.transparent),

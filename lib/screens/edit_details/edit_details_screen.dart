@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 
 import 'package:flutter/material.dart';
@@ -183,12 +184,23 @@ class EditDetailsScreen extends StatelessWidget {
                                   EditDetailsState>(
                                 builder: (context, state) {
                                   return PrimaryBtn(
-                                      callback: () => {
-                                            if (isInitialSetup == false)
-                                              {cubit.createNewCompany(context)}
-                                            else
-                                              {cubit.updateCompany(context)},
-                                          },
+                                      callback: () {
+                                        // Validate fields before proceeding
+                                        if (cubit.validateFields()) {
+                                          if (isInitialSetup == false) {
+                                            cubit.createNewCompany(context);
+                                          } else {
+                                            cubit.updateCompany(context);
+                                          }
+                                        } else {
+                                          // Show a snack bar with an error message
+                                          cubit.showSnackBar(
+                                            context,
+                                            'Please fill in all fields correctly.',
+                                            AnimatedSnackBarType.error,
+                                          );
+                                        }
+                                      },
                                       title: 'Next');
                                 },
                               ),

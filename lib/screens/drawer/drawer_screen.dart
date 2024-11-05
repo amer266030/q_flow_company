@@ -52,9 +52,16 @@ class DrawerScreen extends StatelessWidget {
                       child: cubit.dataMgr.company?.logoUrl == null
                           ? const Image(image: Img.logo, fit: BoxFit.contain)
                           : ClipOval(
-                              child: Image.network(
-                                cubit.dataMgr.company!.logoUrl!,
+                              child: FadeInImage(
+                                placeholder: Img.logo,
+                                image: NetworkImage(
+                                    cubit.dataMgr.company!.logoUrl!),
                                 fit: BoxFit.cover,
+                                imageErrorBuilder:
+                                    (context, error, stackTrace) {
+                                  return Image(
+                                      image: Img.logo, fit: BoxFit.cover);
+                                },
                               ),
                             )),
                 ),
@@ -114,6 +121,9 @@ class DrawerScreen extends StatelessWidget {
                   onTap: () => cubit.navigateToEditDetails(context),
                   title: 'Update Details',
                 ),
+                SizedBox(
+                  height: 4,
+                ),
                 DrawerItemView(
                   onTap: () => cubit.navigateToPrivacyPolicy(context),
                   title: 'Privacy Policy',
@@ -147,31 +157,5 @@ class DrawerScreen extends StatelessWidget {
         );
       }),
     );
-  }
-}
-
-class DrawerToggleItem extends StatelessWidget {
-  const DrawerToggleItem({
-    super.key,
-    required this.title,
-    required this.value,
-    required this.callback,
-  });
-
-  final String title;
-  final bool value;
-  final VoidCallback callback;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-        contentPadding: EdgeInsets.zero,
-        leading: const Icon(
-          CupertinoIcons.circle,
-        ),
-        title: Text(
-          title,
-        ),
-        trailing: Switch(value: value, onChanged: (_) => callback()));
   }
 }

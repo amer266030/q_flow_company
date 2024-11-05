@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -8,6 +9,8 @@ import 'package:q_flow_company/extensions/date_ext.dart';
 import 'package:q_flow_company/mangers/data_mgr.dart';
 
 import 'package:q_flow_company/model/user/company.dart';
+import 'package:q_flow_company/reusable_components/animated_snack_bar.dart';
+import 'package:q_flow_company/utils/validations.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../model/enums/company_size.dart';
@@ -57,6 +60,19 @@ class EditDetailsCubit extends Cubit<EditDetailsState> {
     }
   }
 
+  bool validateFields() {
+    final currentYear = DateTime.now().year;
+    if (nameController.text.isEmpty ||
+        descriptionController.text.isEmpty ||
+        linkedInController.text.isEmpty ||
+        websiteController.text.isEmpty ||
+        xController.text.isEmpty ||
+        startDate.year > currentYear) {
+      return false;
+    }
+    return true;
+  }
+
   void getImage() async {
     final img = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (img != null) {
@@ -78,6 +94,13 @@ class EditDetailsCubit extends Cubit<EditDetailsState> {
   setSize(CompanySize selectedSize) {
     companySize = selectedSize;
     emitUpdate();
+  }
+
+  void showSnackBar(
+      BuildContext context, String msg, AnimatedSnackBarType type) {
+    if (context.mounted) {
+      animatedSnakbar(msg: msg, type: type).show(context);
+    }
   }
 
   @override

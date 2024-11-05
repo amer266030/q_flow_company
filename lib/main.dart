@@ -2,19 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:q_flow_company/screens/auth/auth_screen.dart';
-import 'package:q_flow_company/screens/edit_details/edit_details_screen.dart';
-import 'package:q_flow_company/screens/home/home_screen.dart';
-import 'package:q_flow_company/screens/onboarding/onboarding_screen.dart';
-import 'package:q_flow_company/screens/position_opening/position_opening_screen.dart';
 import 'package:q_flow_company/screens/splash_screen.dart';
-import 'package:q_flow_company/screens/visitor_details.dart/visitor_details_screen.dart';
 import 'package:q_flow_company/services/di_container.dart';
 import 'package:q_flow_company/supabase/client/supabase_mgr.dart';
 import 'package:q_flow_company/theme_data/app_theme_cubit.dart';
 import 'package:q_flow_company/theme_data/app_themes.dart';
-
-import 'model/user/visitor.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:q_flow_company/mangers/data_mgr.dart';
+import 'package:q_flow_company/mangers/notifications_mgr.dart';
 import 'package:q_flow_company/model/rating/visitor_rating_question.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -37,6 +38,11 @@ class VisitorDetailsCubit extends Cubit<VisitorDetailsState> {
   initialLoad(Interview interview) {
     this.interview = interview;
     visitor = getVisitor();
+    NotificationsMgr.sendNotificationToUser(
+      externalId: visitor?.externalId ?? '',
+      msg:
+          'Interview with ${dataMgr.company?.name}\nPlease proceed to interview location',
+    );
     questions = dataMgr.ratingQuestions;
     ratings = List.generate(questions.length, (index) => 1);
     emitUpdate();

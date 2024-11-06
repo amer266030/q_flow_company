@@ -91,7 +91,7 @@ class EditDetailsScreen extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           children: [
                             CustomTextField(
-                                hintText: 'Company Size',
+                                hintText: 'CompanySize'.tr(),
                                 readOnly: true,
                                 controller: TextEditingController(),
                                 validation: Validations.none),

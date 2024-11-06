@@ -99,5 +99,9 @@
   "TimeOfBooking": "وقت الحجز:",
   "PositionInQueue": "موقعك في الصف:",
   "InvalidStatusValue": "قيمة الحالة غير صالحة",
-  "InvalidBootcampValue": "مدخل خاطىء"
+  "InvalidBootcampValue": "مدخل خاطىء",
+  "PleaseFill": "يرجى تعبئة جميع الحقول",
+  "CouldNotCreateSocial": "تعذر أنشاء الروابط الاجتماعية لأن لم يتم العثور على المستخدم!",
+  "CouldNotCreateCompany": "تعذر أنشاء الشركة!\nالرجاء المحاولة مرة أخرى في وقت لاحق.",
+  "CouldNotUpdateEvent": "تعذر تحديث الحدث!\nالرجاء المحاولة مرة أخرى في وقت لاحق.\n"
 }

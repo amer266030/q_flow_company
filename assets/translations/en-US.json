@@ -98,5 +98,9 @@
   "TimeOfBooking": "Time of booking:",
   "PositionInQueue": "Position in queue:",
   "InvalidStatusValue": "Invalid status value",
-  "InvalidBootcampValue": "Invalid value"
+  "InvalidBootcampValue": "Invalid value",
+  "PleaseFill": "Please fill in all fields correctly.",
+  "CouldNotCreateSocial": "Could not create social links because no user was found!",
+  "CouldNotCreateCompany": "Could not create company!\nPlease try again later.",
+  "CouldNotUpdateEvent": "Could not update event!\nPlease try again later.\n"
 }

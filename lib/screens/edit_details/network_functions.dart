@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:q_flow_company/model/user/company.dart';
@@ -30,7 +31,7 @@ extension NetworkFunctions on EditDetailsCubit {
       var companyId = newCompany.id;
       if (companyId == null) {
         throw Exception(
-            'Could not create social links because no user was found!');
+            'CouldNotCreateSocial'.tr());
       }
       var links = createLinks(companyId);
       var socialLinks = await SupabaseSocialLink.insertLinks(links);
@@ -44,7 +45,7 @@ extension NetworkFunctions on EditDetailsCubit {
         navigateToPositionOpening(context);
       }
     } catch (e) {
-      emitError('Could not create company!\nPlease try again later.');
+      emitError('CouldNotCreateCompany'.tr());
     }
   }
 
@@ -70,7 +71,7 @@ extension NetworkFunctions on EditDetailsCubit {
       dataMgr.saveCompanyData(company: company);
     } catch (e) {
       emitError(
-          'Could not update event!\nPlease try again later.\n${e.toString()}');
+          'CouldNotUpdateEvent${e.toString()}'.tr());
     }
   }
 

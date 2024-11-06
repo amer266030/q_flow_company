@@ -128,7 +128,7 @@ class EditDetailsScreen extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           children: [
                             CustomTextField(
-                                hintText: 'Established Year',
+                                hintText: 'Established'.tr(),
                                 readOnly: true,
                                 controller: TextEditingController(
                                     text: cubit.startDate.year.toString()),
@@ -158,7 +158,7 @@ class EditDetailsScreen extends StatelessWidget {
                               padding: EdgeInsets.only(right: 32),
                               child: Icon(BootstrapIcons.linkedin),
                             ),
-                            hintText: 'Linkedin',
+                            hintText: 'Linkedin'.tr(),
                             controller: cubit.linkedInController,
                             validation: Validations.name),
                         CustomTextField(
@@ -166,7 +166,7 @@ class EditDetailsScreen extends StatelessWidget {
                               padding: EdgeInsets.only(right: 32),
                               child: Icon(BootstrapIcons.link_45deg),
                             ),
-                            hintText: 'Website',
+                            hintText: 'Website'.tr(),
                             controller: cubit.websiteController,
                             validation: Validations.name),
                         CustomTextField(
@@ -174,7 +174,7 @@ class EditDetailsScreen extends StatelessWidget {
                               padding: EdgeInsets.only(right: 32),
                               child: Icon(BootstrapIcons.twitter_x),
                             ),
-                            hintText: 'Twitter',
+                            hintText: 'Twitter'.tr(),
                             controller: cubit.xController,
                             validation: Validations.name),
                         const SizedBox(height: 16),
@@ -197,7 +197,7 @@ class EditDetailsScreen extends StatelessWidget {
                                           // Show a snack bar with an error message
                                           cubit.showSnackBar(
                                             context,
-                                            'Please fill in all fields correctly.',
+                                            'PleaseFill'.tr(),
                                             AnimatedSnackBarType.error,
                                           );
                                         }

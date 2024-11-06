@@ -56,7 +56,7 @@ class EditDetailsScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(24),
                 child: ListView(
                   children: [
-                    const PageHeaderView(title: 'Update Profile'),
+                     PageHeaderView(title: 'UpdateProfile'.tr()),
                     Column(
                       children: [
                         BlocBuilder<EditDetailsCubit, EditDetailsState>(
@@ -69,14 +69,14 @@ class EditDetailsScreen extends StatelessWidget {
                         ),
                         TextButton(
                             onPressed: cubit.getImage,
-                            child: Text('Add Logo',
+                            child: Text('AddLogo',
                                 style: TextStyle(
                                     fontSize: context.bodySmall.fontSize,
                                     color: context.primary,
                                     fontWeight:
-                                        context.titleSmall.fontWeight))),
+                                        context.titleSmall.fontWeight)).tr()),
                         CustomTextField(
-                            hintText: 'Company Name',
+                            hintText: 'CompanyName'.tr(),
                             controller: cubit.nameController,
                             validation: Validations.name),
                         CustomTextField(

@@ -102,5 +102,17 @@
   "PleaseFill": "Please fill in all fields correctly.",
   "CouldNotCreateSocial": "Could not create social links because no user was found!",
   "CouldNotCreateCompany": "Could not create company!\nPlease try again later.",
-  "CouldNotUpdateEvent": "Could not update event!\nPlease try again later.\n"
+  "CouldNotUpdateEvent": "Could not update event!\nPlease try again later.\n",
+  "UpdateDetails": "Update Details",
+  "LogoutConfirmation": "Logout Confirmation",
+  "AreYou": "Are you sure you want to log out?",
+  "TotalApplicants": "Total Applicants: ",
+  "OpenApplying": "Open Applying ",
+  "Events": "Events",
+  "QueueStatus": "Queue Status",
+  "Open": "Open",
+  "Close": "Close",
+  "NoVisitors": "No visitors in the queue.",
+  "NoVisitorsApplied": "No visitors applied.",
+  "NoVisitorsSaved": "No visitors saved."
 }

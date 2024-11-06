@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,7 +53,7 @@ class DrawerScreen extends StatelessWidget {
                                     fit: BoxFit.cover,
                                     imageErrorBuilder:
                                         (context, error, stackTrace) {
-                                      return Image(
+                                      return const Image(
                                           image: Img.logoPurple,
                                           fit: BoxFit.cover);
                                     },
@@ -92,19 +93,19 @@ class DrawerScreen extends StatelessWidget {
                 ),
                 DrawerItemView(
                   onTap: () => cubit.navigateToEditDetails(context),
-                  title: 'Update Details',
+                  title: 'UpdateDetails'.tr(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 DrawerItemView(
                   onTap: () => cubit.navigateToPrivacyPolicy(context),
-                  title: 'Privacy Policy',
+                  title: 'PrivacyPolicy'.tr(),
                 ),
                 BlocBuilder<DrawerCubit, DrawerState>(
                   builder: (context, state) {
                     return ToggleListItem(
-                        title: 'Language',
+                        title: 'Language'.tr(),
                         value: cubit.isEnglish,
                         strItems: const ['AR', 'EN'],
                         callback: () => cubit.toggleLanguage(context));
@@ -113,7 +114,7 @@ class DrawerScreen extends StatelessWidget {
                 BlocBuilder<DrawerCubit, DrawerState>(
                   builder: (context, state) {
                     return ToggleListItem(
-                        title: 'Theme Mode',
+                        title: 'ThemeMode'.tr(),
                         value: cubit.isDarkMode,
                         iconItems: const [
                           CupertinoIcons.sun_max,
@@ -123,7 +124,7 @@ class DrawerScreen extends StatelessWidget {
                   },
                 ),
                 DrawerItemView(
-                    title: 'Logout', onTap: () => cubit.logout(context)),
+                    title: 'Logout'.tr(), onTap: () => cubit.logout(context)),
               ],
             ),
           ),

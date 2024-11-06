@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,13 +23,13 @@ class OpenApplyingView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Open Applying',
+            'OpenApplying',
             style: TextStyle(
               fontSize: context.bodyLarge.fontSize,
               fontWeight: FontWeight.bold,
               color: context.textColor1,
             ),
-          ),
+          ).tr(),
         ],
       ),
     );

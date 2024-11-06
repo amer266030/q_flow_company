@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:q_flow_company/extensions/screen_size.dart';
@@ -77,7 +78,7 @@ class HomeScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 color: context.textColor1,
                               ),
-                            ),
+                            ).tr(),
                             children: [
                               FilterItemView(
                                 itemValues: cubit.events
@@ -97,19 +98,19 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                'Queue Status',
+                                'QueueStatus',
                                 style: TextStyle(
                                   fontSize: context.bodyLarge.fontSize,
                                   fontWeight: FontWeight.bold,
                                   color: context.textColor1,
                                 ),
-                              ),
+                              ).tr(),
                             ),
                             Expanded(
                               child: ExpandedToggleButtons(
                                   currentIndex: QueueStatus.values
                                       .indexOf(cubit.selectedQueueStatus),
-                                  tabs: const ['Open', 'Close'],
+                                  tabs:  ['Open'.tr(), 'Close'.tr()],
                                   callback: (value) =>
                                       cubit.toggleOpenApplying(context, value)),
                             ),
@@ -170,12 +171,12 @@ class HomeScreen extends StatelessWidget {
                                   )
                                 : Center(
                                     child: Text(
-                                      'No visitors in the queue.',
+                                      'NoVisitors',
                                       style: TextStyle(
                                         fontSize: context.bodyLarge.fontSize,
                                         color: context.textColor1,
                                       ),
-                                    ),
+                                    ).tr(),
                                   )
                             : cubit.selectedVisitorStatus ==
                                     VisitorStatus.applied
@@ -202,13 +203,13 @@ class HomeScreen extends StatelessWidget {
                                       )
                                     : Center(
                                         child: Text(
-                                          'No visitors applied.',
+                                          'NoVisitorsApplied',
                                           style: TextStyle(
                                             fontSize:
                                                 context.bodyLarge.fontSize,
                                             color: context.textColor1,
                                           ),
-                                        ),
+                                        ).tr(),
                                       )
                                 : cubit.selectedVisitorStatus ==
                                         VisitorStatus.saved
@@ -236,13 +237,13 @@ class HomeScreen extends StatelessWidget {
                                           )
                                         : Center(
                                             child: Text(
-                                              'No visitors saved.',
+                                              'NoVisitorsSaved',
                                               style: TextStyle(
                                                 fontSize:
                                                     context.bodyLarge.fontSize,
                                                 color: context.textColor1,
                                               ),
-                                            ),
+                                            ).tr(),
                                           )
                                     : Container(),
                       ),
@@ -256,7 +257,7 @@ class HomeScreen extends StatelessWidget {
                                           callback: () =>
                                               cubit.navigateToVisitorDetails(
                                                   context),
-                                          title: "Start")),
+                                          title: "Start".tr())),
                                 ],
                               ),
                             )

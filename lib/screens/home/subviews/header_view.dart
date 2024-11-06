@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:q_flow_company/reusable_components/alert/qr_alert.dart';
@@ -13,7 +14,6 @@ class HeaderView extends StatelessWidget {
     required this.companyName,
     required this.logoUrl,
     required this.interviewsCount,
-    
   });
 
   final String companyName;
@@ -48,7 +48,7 @@ class HeaderView extends StatelessWidget {
                           image: NetworkImage(logoUrl!),
                           fit: BoxFit.cover,
                           imageErrorBuilder: (context, error, stackTrace) {
-                            return Image(
+                            return const Image(
                                 image: Img.logoPurple, fit: BoxFit.cover);
                           },
                         ),
@@ -64,32 +64,29 @@ class HeaderView extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
                       Text(companyName,
                           style: context.bodyLarge, maxLines: 1, softWrap: true)
                     ],
                   ),
-                  SizedBox(height: 4),
-                   Row(
-                  children: [
-                    Icon(
-                      CupertinoIcons.person_3_fill,
-                      color: context.textColor3,
-                      size: 21,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      "Total Applicants: ",
-                      style: context.bodySmall,
-                    ),
-                    Text("$interviewsCount",
-                        style: TextStyle(
-                            fontSize: context.bodySmall.fontSize,
-                            color: context.primary)),
-                  ],
-                ),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.person_3_fill,
+                        color: context.textColor3,
+                        size: 21,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text("TotalApplicants", style: context.bodySmall).tr(),
+                      Text("$interviewsCount",
+                          style: TextStyle(
+                              fontSize: context.bodySmall.fontSize,
+                              color: context.primary)),
+                    ],
+                  ),
                 ],
               ),
             ),

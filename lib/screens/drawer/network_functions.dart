@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:q_flow_company/mangers/alert_manger.dart';
 import 'package:q_flow_company/screens/drawer/drawer_cubit.dart';
@@ -8,10 +9,10 @@ extension NetworkFunctions on DrawerCubit {
   logout(BuildContext context) async {
     AlertManager().showDefaultAlert(
       context: context,
-      title: 'Logout Confirmation',
-      secondaryBtnText: 'Cancel',
-      primaryBtnText: 'Logout',
-      message: 'Are you sure you want to log out?',
+      title: 'LogoutConfirmation'.tr(),
+      secondaryBtnText: 'Cancel'.tr(),
+      primaryBtnText: 'Logout'.tr(),
+      message: 'AreYou'.tr(),
       onConfirm: () async {
         try {
           emitLoading();

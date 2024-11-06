@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../model/skills/skill.dart';
@@ -9,7 +10,7 @@ class SupabaseSkill {
 
   static updateSkills(List<Skill> skills) async {
     var companyId = supabase.auth.currentUser?.id;
-    if (companyId == null) throw Exception("Company ID not found");
+    if (companyId == null) throw Exception("CompanyID".tr());
 
     try {
       await supabase.from(tableKey).delete().eq('company_id', companyId);

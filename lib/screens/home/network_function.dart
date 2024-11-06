@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:q_flow_company/model/bookmarks/bookmarked_visitor.dart';
 import 'package:q_flow_company/screens/home/home_cubit.dart';
@@ -23,7 +24,7 @@ extension NetworkFunctions on HomeCubit {
       var response = await SupabaseCompany.fetchCompany();
       return response;
     } catch (e) {
-      emitError("Error loading company details:\n${e.toString()}");
+      emitError("ErrorLoading${e.toString()}".tr());
     }
   }
 
@@ -41,7 +42,7 @@ extension NetworkFunctions on HomeCubit {
       dataMgr.saveCompanyData(company: company);
     } catch (e) {
       emitError(
-          'Could not update event!\nPlease try again later.\n${e.toString()}');
+          'CouldNotUpdateEvent${e.toString()}'.tr());
     }
   }
 

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:q_flow_company/model/rating/visitor_question_rating.dart';
 import 'package:q_flow_company/model/rating/visitor_rating_question.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -49,7 +50,7 @@ class SupabaseRating {
         return 0.0;
       }
     } on PostgrestException catch (e) {
-      throw Exception("Failed to fetch average rating: ${e.message}");
+      throw Exception("FailedToFetch ${e.message}".tr());
     }
   }
 
@@ -83,7 +84,7 @@ class SupabaseRating {
 
       await supabase.from(questionRatingTableKey).insert(questionRatingData);
     } on PostgrestException catch (e) {
-      throw Exception("Failed to create rating: ${e.message}");
+      throw Exception("FailedToCreate ${e.message}".tr());
     }
   }
 }

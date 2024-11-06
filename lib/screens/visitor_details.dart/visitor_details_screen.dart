@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -84,9 +85,9 @@ class VisitorDetailsScreen extends StatelessWidget {
                       Text('Comments',
                           style: TextStyle(
                               fontSize: context.bodyLarge.fontSize,
-                              fontWeight: context.titleSmall.fontWeight)),
+                              fontWeight: context.titleSmall.fontWeight)).tr(),
                       CustomTextField(
-                        hintText: 'The candidate showed strong knowledge in...',
+                        hintText: 'TheCandidate'.tr(),
                         controller: cubit.commentController,
                         validation: Validations.name,
                         borderRadius: 32,
@@ -120,10 +121,10 @@ class _RatingView extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text('Evaluation:',
+              Text('Evaluation',
                   style: TextStyle(
                       fontSize: context.bodyLarge.fontSize,
-                      fontWeight: context.titleSmall.fontWeight)),
+                      fontWeight: context.titleSmall.fontWeight)).tr(),
             ],
           ),
           Padding(
@@ -268,14 +269,14 @@ class _ButtonsView extends StatelessWidget {
                 callback: () {
                   AlertManager().showDefaultAlert(
                       context: context,
-                      title: "Skip Interview",
-                      message: "mark the interview as cancelled?",
+                      title: "SkipInterview".tr(),
+                      message: "mark".tr(),
                       onConfirm: () => cubit.interviewCancelled(context),
                       onCancel: () {},
-                      secondaryBtnText: 'No',
-                      primaryBtnText: 'Yes');
+                      secondaryBtnText: 'Noo'.tr(),
+                      primaryBtnText: 'Yes'.tr());
                 },
-                title: "Skip")),
+                title: "Skip".tr())),
         const SizedBox(
           width: 10,
         ),
@@ -284,14 +285,14 @@ class _ButtonsView extends StatelessWidget {
               callback: () {
                 AlertManager().showDefaultAlert(
                     context: context,
-                    title: "Complete Interview",
-                    message: "Save remarks and go to next candidate?",
+                    title: "CompleteInterview".tr(),
+                    message: "SaveRemarks".tr(),
                     onConfirm: () => cubit.interviewCompleted(context),
                     onCancel: () {},
-                    secondaryBtnText: 'Cancel',
-                    primaryBtnText: 'Yes');
+                    secondaryBtnText: 'Cancel'.tr(),
+                    primaryBtnText: 'Yes'.tr());
               },
-              title: 'Complete'),
+              title: 'Complete'.tr()),
         )
       ],
     );

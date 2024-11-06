@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -15,7 +16,7 @@ class SupabaseInterview {
   static Stream<List<Interview>> interviewStream() {
     try {
       var companyId = supabase.auth.currentUser?.id;
-      if (companyId == null) throw Exception("Company ID not found");
+      if (companyId == null) throw Exception("CompanyID".tr());
 
       return supabase
           .from(tableKey)
@@ -32,7 +33,7 @@ class SupabaseInterview {
 
   static Future<List<Interview>> fetchInterviews() async {
     var companyId = supabase.auth.currentUser?.id;
-    if (companyId == null) throw Exception("Company ID not found");
+    if (companyId == null) throw Exception("CompanyID".tr());
 
     try {
       final response = await supabase

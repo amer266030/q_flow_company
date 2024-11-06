@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:q_flow_company/model/enums/user_social_link.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -10,7 +11,7 @@ class SupabaseSocialLink {
 
   static insertLinks(List<SocialLink> links) async {
     var companyId = supabase.auth.currentUser?.id;
-    if (companyId == null) throw Exception("Company ID not found");
+    if (companyId == null) throw Exception("CompanyID".tr());
 
     try {
       final socialLinksData = links.map((link) {
@@ -28,7 +29,7 @@ class SupabaseSocialLink {
 
   static Future<void> updateLinks(List<SocialLink> links) async {
     var companyId = supabase.auth.currentUser?.id;
-    if (companyId == null) throw Exception("Company ID not found");
+    if (companyId == null) throw Exception("CompanyID".tr());
 
     try {
       // Use Future.wait to run updates concurrently

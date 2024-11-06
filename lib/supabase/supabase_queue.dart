@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -45,7 +46,7 @@ class SupabaseQueue {
 
   static Future deleteFromQueue(QueueEntry queueEntry) async {
     if (queueEntry.interviewId == null) {
-      throw Exception("Interview ID not found");
+      throw Exception("InterviewIDNotFound".tr());
     }
     try {
       await supabase

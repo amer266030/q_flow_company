@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:q_flow_company/model/enums/interview_status.dart';
 import 'package:q_flow_company/screens/visitor_details.dart/visitor_details_cubit.dart';
@@ -18,7 +19,7 @@ extension NetworkFunctions on VisitorDetailsCubit {
       emitUpdate();
       if (context.mounted) navigateBack(context);
     } catch (e) {
-      emitError('Could not update interview!\n${e.toString()}');
+      emitError('CouldNotUpdateInterview${e.toString()}'.tr());
     }
   }
 
@@ -30,15 +31,15 @@ extension NetworkFunctions on VisitorDetailsCubit {
         navigateBack(context);
       }
     } catch (e) {
-      emitError('Could not update interview!\n${e.toString()}');
+      emitError('CouldNotUpdateInterview${e.toString()}'.tr());
     }
   }
 
   Future _createRating(BuildContext context) async {
     try {
-      if (visitor?.id == null) throw Exception('Could not load visitor');
+      if (visitor?.id == null) throw Exception('Could'.tr());
       if (dataMgr.company?.id == null) {
-        throw Exception('Could not load company');
+        throw Exception('CouldNotLoadCompany'.tr());
       }
 
       List<VisitorQuestionRating> questionRatings = _setRatings();

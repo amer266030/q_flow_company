@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:q_flow_company/supabase/client/supabase_mgr.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -19,10 +20,10 @@ class SupabaseAuth {
 
       if (invitationCheck == null) {
         throw Exception(
-            "The provided email haven't been invited to an event. Please contact the organizer for support");
+            "TheProvidedEmail".tr());
       } else if (invitationCheck['is_company'] == false) {
         throw Exception(
-            "Access Denied!\nProvided email is intended for our Visitor App");
+            "AccessDenied".tr());
       }
       var response = await supabase.auth.signInWithOtp(email: email);
       return response;

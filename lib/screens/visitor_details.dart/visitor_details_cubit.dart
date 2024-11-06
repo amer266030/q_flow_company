@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -63,7 +64,7 @@ class VisitorDetailsCubit extends Cubit<VisitorDetailsState> {
       if (await canLaunchUrl(urlParsed)) {
         await launchUrl(urlParsed);
       } else {
-        throw 'Could not launch call to: $phoneNumber';
+        throw 'CouldNotLaunch$phoneNumber'.tr();
       }
     } catch (e) {
       emitError(e.toString());
@@ -78,7 +79,7 @@ class VisitorDetailsCubit extends Cubit<VisitorDetailsState> {
       final bool launched = await launchUrl(mail);
       if (launched) {
       } else {
-        throw Exception('Could not launch email app');
+        throw Exception('launchEmail'.tr());
       }
     } catch (e) {
       emitError(e.toString());
@@ -91,7 +92,7 @@ class VisitorDetailsCubit extends Cubit<VisitorDetailsState> {
       if (await canLaunchUrl(uri)) {
         await launchUrl(uri);
       } else {
-        throw Exception('Could not launch $url');
+        throw Exception('URL $url'.tr());
       }
     } catch (e) {
       emitError(e.toString());

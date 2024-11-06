@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:q_flow_company/screens/position_opening/network_functions.dart';
@@ -43,7 +44,7 @@ class PositionOpeningScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const PageHeaderView(title: "Job Positions"),
+                    PageHeaderView(title: "JobPositions".tr()),
                     BlocBuilder<PositionOpeningCubit, PositionOpeningState>(
                       builder: (context, state) {
                         return Expanded(
@@ -76,7 +77,7 @@ class PositionOpeningScreen extends StatelessWidget {
                         Expanded(
                           child: PrimaryBtn(
                               callback: () => cubit.updateSkills(context),
-                              title: 'Continue'),
+                              title: 'Continue'.tr()),
                         ),
                       ],
                     )

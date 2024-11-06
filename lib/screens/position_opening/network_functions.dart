@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:q_flow_company/screens/position_opening/position_opening_cubit.dart';
 import 'package:q_flow_company/supabase/supabase_skill.dart';
@@ -15,7 +16,7 @@ extension NetworkFunctions on PositionOpeningCubit {
 
       if (context.mounted) navigateToHome(context);
     } catch (e) {
-      emitError("Error loading company details: $e");
+      emitError("ErrorLoading $e".tr());
     }
   }
 

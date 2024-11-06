@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+
 class Validations {
   static String? name(String value) {
     final regex = RegExp(r'^[a-zA-Z\s]+$');
@@ -6,7 +8,7 @@ class Validations {
     } else if (!regex.hasMatch(value)) {
       return 'Invalid name format';
     } else {
-      return 'This Field Cannot be Empty';
+      return 'ThisFieldCannotBeEmpty'.tr();
     }
   }
 
@@ -15,7 +17,7 @@ class Validations {
     if (regex.hasMatch(value)) {
       return null;
     } else {
-      return 'Please enter a valid email address';
+      return 'PleaseEnterAValidEmailAddress'.tr();
     }
   }
 
@@ -25,7 +27,7 @@ class Validations {
     if (regex.hasMatch(value)) {
       return null;
     } else {
-      return 'Please enter a valid phone number';
+      return 'PleaseEnterAValidPhoneNumber'.tr();
     }
   }
 
@@ -35,14 +37,14 @@ class Validations {
     if (regex.hasMatch(value)) {
       return null;
     } else {
-      return 'Must be at least 8 characters';
+      return 'MustBeAtLeast8Characters'.tr();
     }
   }
 
   static String? validateInt(String value) {
     final intValue = int.tryParse(value);
     if (intValue == null) {
-      return 'Please enter a valid integer';
+      return 'PleaseEnterAValidInteger'.tr();
     }
 
     return null; // Return null if validation passes
@@ -51,7 +53,7 @@ class Validations {
   static String? validateDouble(String value) {
     final doubleValue = double.tryParse(value);
     if (doubleValue == null) {
-      return 'Please enter a valid decimal number';
+      return 'PleaseEnterAValidDecimalNumber'.tr();
     }
 
     return null; // Return null if validation passes

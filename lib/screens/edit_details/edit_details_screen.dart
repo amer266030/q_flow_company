@@ -80,7 +80,7 @@ class EditDetailsScreen extends StatelessWidget {
                             controller: cubit.nameController,
                             validation: Validations.name),
                         CustomTextField(
-                          hintText: 'Description',
+                          hintText: 'Description'.tr(),
                           controller: cubit.descriptionController,
                           validation: Validations.name,
                           borderRadius: 40,

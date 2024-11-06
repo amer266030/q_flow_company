@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
@@ -54,16 +55,16 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   final List<AssetImage> images = [Img.ob1, Img.ob2, Img.ob3];
   final List<(String, String)> content = [
     (
-      'Discover \nOpportunities',
-      'Explore visitor profiles to find candidates that align with your needs.'
+      'DiscoverOpportunities'.tr(),
+      'ExploreVisitor'.tr()
     ),
     (
-      'Pre-Book \nInterviews',
-      'Easily schedule interviews in advance for a smooth hiring process.'
+      'PreBookInterviews'.tr(),
+      'EasilySchedule'.tr()
     ),
     (
-      'Real-Time \nUpdates',
-      'Stay informed with instant notifications on interview schedules.'
+      'RealTimeUpdates'.tr(),
+      'StayInformed'.tr()
     )
   ];
 

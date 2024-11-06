@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:q_flow_company/reusable_components/button/primary_btn.dart';
 import 'package:q_flow_company/reusable_components/custom_text_field.dart';
 import 'package:q_flow_company/reusable_components/page_header_view.dart';
+import 'package:q_flow_company/screens/drawer/drawer_cubit.dart';
 import 'package:q_flow_company/utils/validations.dart';
 
 class LoginFormView extends StatelessWidget {
@@ -15,7 +17,7 @@ class LoginFormView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PageHeaderView(title: 'Login'),
+        PageHeaderView(title: 'Login'.tr()),
         CustomTextField(
             hintText: 'Email',
             controller: controller,

@@ -83,7 +83,6 @@ class SupabaseCompany {
           .insert(company.toJson())
           .select()
           .single();
-      ;
       dataMgr.saveCompanyData(company: company);
 
       return Company.fromJson(response);

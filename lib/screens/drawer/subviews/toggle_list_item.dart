@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:q_flow_company/theme_data/extensions/text_style_ext.dart';
-import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
 
 import '../../../reusable_components/button/custom_icons_switch.dart';
 import '../../../reusable_components/button/custom_switch.dart';

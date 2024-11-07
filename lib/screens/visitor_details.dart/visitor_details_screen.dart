@@ -105,7 +105,7 @@ class VisitorDetailsScreen extends StatelessWidget {
 }
 
 class _RatingView extends StatelessWidget {
-  const _RatingView({super.key, required this.cubit});
+  const _RatingView({required this.cubit});
 
   final VisitorDetailsCubit cubit;
 
@@ -149,7 +149,6 @@ class _RatingView extends StatelessWidget {
 
 class _SkillsView extends StatelessWidget {
   const _SkillsView({
-    super.key,
     required this.visitor,
   });
 
@@ -185,7 +184,6 @@ class _SkillsView extends StatelessWidget {
 
 class _HeaderView extends StatelessWidget {
   const _HeaderView({
-    super.key,
     required this.visitor,
   });
 

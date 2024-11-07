@@ -10,8 +10,6 @@ import 'package:q_flow_company/mangers/data_mgr.dart';
 
 import 'package:q_flow_company/model/user/company.dart';
 import 'package:q_flow_company/reusable_components/animated_snack_bar.dart';
-import 'package:q_flow_company/utils/validations.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../model/enums/company_size.dart';
 import '../../model/enums/user_social_link.dart';

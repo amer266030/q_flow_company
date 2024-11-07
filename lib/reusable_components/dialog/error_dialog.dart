@@ -9,7 +9,7 @@ AwesomeDialog showErrorDialog(BuildContext context, String msg) {
   return AwesomeDialog(
       context: context,
       dialogType: DialogType.noHeader,
-      padding: EdgeInsets.all(24),
+      padding: const EdgeInsets.all(24),
       dialogBorderRadius: BorderRadius.circular(24),
       dialogBackgroundColor: context.bg1,
       barrierColor: context.bg3.withOpacity(0.4),

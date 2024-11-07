@@ -48,7 +48,7 @@ class StarRatingView extends StatelessWidget {
                 starSpacing: 8,
                 maxValueVisibility: true,
                 valueLabelVisibility: false,
-                animationDuration: Duration(milliseconds: 500),
+                animationDuration: const Duration(milliseconds: 500),
                 valueLabelPadding:
                     const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
                 valueLabelMargin: const EdgeInsets.only(right: 8),

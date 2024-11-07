@@ -10,7 +10,7 @@ AnimatedSnackBar animatedSnakbar({
   required AnimatedSnackBarType type,
 }) {
   return AnimatedSnackBar(
-    animationDuration: Duration(milliseconds: 100),
+    animationDuration: const Duration(milliseconds: 100),
     builder: ((context) {
       if (context.mounted) {
         return MaterialAnimatedSnackBar(

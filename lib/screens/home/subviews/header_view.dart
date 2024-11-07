@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:q_flow_company/reusable_components/alert/qr_alert.dart';
 import 'package:q_flow_company/theme_data/extensions/text_style_ext.dart';
 import 'package:q_flow_company/theme_data/extensions/theme_ext.dart';
 
@@ -48,7 +47,7 @@ class HeaderView extends StatelessWidget {
                           image: NetworkImage(logoUrl!),
                           fit: BoxFit.cover,
                           imageErrorBuilder: (context, error, stackTrace) {
-                            return Image(
+                            return const Image(
                                 image: Img.logoPurple, fit: BoxFit.cover);
                           },
                         ),
@@ -64,12 +63,12 @@ class HeaderView extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
                       Text(companyName,
                           style: context.bodyLarge, maxLines: 1, softWrap: true)
                     ],
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                    Row(
                   children: [
                     Icon(

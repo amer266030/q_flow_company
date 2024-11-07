@@ -6,7 +6,6 @@ import 'package:q_flow_company/mangers/data_mgr.dart';
 import 'package:q_flow_company/screens/edit_details/edit_details_screen.dart';
 import 'package:q_flow_company/screens/home/home_screen.dart';
 import 'package:q_flow_company/supabase/client/supabase_mgr.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../extensions/img_ext.dart';
 import '../auth/auth_screen.dart';

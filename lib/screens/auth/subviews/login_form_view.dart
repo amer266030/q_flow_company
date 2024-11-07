@@ -5,7 +5,7 @@ import 'package:q_flow_company/reusable_components/page_header_view.dart';
 import 'package:q_flow_company/utils/validations.dart';
 
 class LoginFormView extends StatelessWidget {
-  const LoginFormView({required this.callback, required this.controller});
+  const LoginFormView({super.key, required this.callback, required this.controller});
   final TextEditingController controller;
   final VoidCallback callback;
 
@@ -15,7 +15,7 @@ class LoginFormView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PageHeaderView(title: 'Login'),
+        const PageHeaderView(title: 'Login'),
         CustomTextField(
             hintText: 'Email',
             controller: controller,

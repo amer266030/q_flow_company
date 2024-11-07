@@ -14,9 +14,9 @@ class QRAlert extends StatelessWidget {
 
   const QRAlert({
     required this.onClose,
-    Key? key,
+    super.key,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class QRAlert extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                       color:  Colors.white,
                       borderRadius: BorderRadius.circular(24)),
@@ -38,7 +38,7 @@ class QRAlert extends StatelessWidget {
                     children: [
                       IconButton(
                         onPressed: onClose,
-                        icon: Icon(
+                        icon: const Icon(
                           CupertinoIcons.xmark_circle_fill,
                           color: Colors.black,
                           size: 32,
@@ -56,7 +56,7 @@ class QRAlert extends StatelessWidget {
                     ],
                   )),
               Container(
-                padding: EdgeInsets.all(24),
+                padding: const EdgeInsets.all(24),
                 width: context.screenWidth * 0.9,
                 height: context.screenWidth * 0.2,
                 decoration: BoxDecoration(

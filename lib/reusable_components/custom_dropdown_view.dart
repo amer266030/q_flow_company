@@ -20,7 +20,7 @@ class CustomDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButton<String>(
       dropdownColor: context.bg2, // Assuming you have these extensions
-      underline: SizedBox.shrink(),
+      underline: const SizedBox.shrink(),
       style: TextStyle(
         fontSize: context.bodyMedium.fontSize, // Using context for size
         color: context.textColor3,

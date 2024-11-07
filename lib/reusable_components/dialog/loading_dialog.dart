@@ -8,7 +8,7 @@ AwesomeDialog showLoadingDialog(BuildContext context) {
   return AwesomeDialog(
     context: context,
     dialogType: DialogType.noHeader,
-    padding: EdgeInsets.symmetric(vertical: 24),
+    padding: const EdgeInsets.symmetric(vertical: 24),
     dialogBorderRadius: BorderRadius.circular(24),
     dialogBackgroundColor: context.bg1,
     barrierColor: context.textColor1.withOpacity(0.4),
@@ -17,12 +17,12 @@ AwesomeDialog showLoadingDialog(BuildContext context) {
     body: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(
+        const SizedBox(
           child: Image(
             image: Img.loading,
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Text('Please wait...', style: context.bodyMedium),
       ],
     ),

@@ -1,5 +1,4 @@
 import 'package:get_it/get_it.dart';
-import 'package:q_flow_company/model/bookmarks/bookmarked_company.dart';
 import 'package:q_flow_company/model/skills/skill.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

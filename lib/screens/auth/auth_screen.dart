@@ -39,7 +39,7 @@ class AuthScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(24),
                   child: ListView(children: [
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.all(4),
                       child: ClipOval(
                           child: AspectRatio(

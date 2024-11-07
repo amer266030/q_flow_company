@@ -1,5 +1,4 @@
 import '../model/enums/experience.dart';
-import '../model/enums/visitor_status.dart';
 import '../model/user/visitor.dart';
 
 List<Visitor> visitors = [

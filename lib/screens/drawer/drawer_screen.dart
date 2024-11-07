@@ -52,7 +52,7 @@ class DrawerScreen extends StatelessWidget {
                                     fit: BoxFit.cover,
                                     imageErrorBuilder:
                                         (context, error, stackTrace) {
-                                      return Image(
+                                      return const Image(
                                           image: Img.logoPurple,
                                           fit: BoxFit.cover);
                                     },
@@ -94,7 +94,7 @@ class DrawerScreen extends StatelessWidget {
                   onTap: () => cubit.navigateToEditDetails(context),
                   title: 'Update Details',
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 DrawerItemView(

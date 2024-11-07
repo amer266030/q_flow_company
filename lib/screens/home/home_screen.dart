@@ -56,18 +56,18 @@ class HomeScreen extends StatelessWidget {
             body: SafeArea(
               child: BlocBuilder<HomeCubit, HomeState>(
                 builder: (context, state) {
-                  return Column(
-                    children: [
-                      HeaderView(
-                        logoUrl: cubit.dataMgr.company?.logoUrl,
-                        companyName: cubit.dataMgr.company?.name ?? '',
-                        interviewsCount: cubit.interviews.length,
-                      ),
-                      Theme(
-                        data: Theme.of(context)
-                            .copyWith(dividerColor: Colors.transparent),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: [
+                        HeaderView(
+                          logoUrl: cubit.dataMgr.company?.logoUrl,
+                          companyName: cubit.dataMgr.company?.name ?? '',
+                          interviewsCount: cubit.interviews.length,
+                        ),
+                        Theme(
+                          data: Theme.of(context)
+                              .copyWith(dividerColor: Colors.transparent),
                           child: ExpansionTile(
                             initiallyExpanded: true,
                             title: Text(
@@ -90,178 +90,179 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 32),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                'Queue Status',
-                                style: TextStyle(
-                                  fontSize: context.bodyLarge.fontSize,
-                                  fontWeight: FontWeight.bold,
-                                  color: context.textColor1,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Queue Status',
+                                  style: TextStyle(
+                                    fontSize: context.bodyLarge.fontSize,
+                                    fontWeight: FontWeight.bold,
+                                    color: context.textColor1,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Expanded(
-                              child: ExpandedToggleButtons(
-                                  currentIndex: QueueStatus.values
-                                      .indexOf(cubit.selectedQueueStatus),
-                                  tabs: const ['Open', 'Close'],
-                                  callback: (value) =>
-                                      cubit.toggleOpenApplying(context, value)),
-                            ),
-                          ],
+                              Expanded(
+                                child: ExpandedToggleButtons(
+                                    currentIndex: QueueStatus.values
+                                        .indexOf(cubit.selectedQueueStatus),
+                                    tabs: const ['Open', 'Close'],
+                                    callback: (value) => cubit
+                                        .toggleOpenApplying(context, value)),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: ExpandedToggleButtons(
-                          currentIndex: VisitorStatus.values
-                              .indexOf(cubit.selectedVisitorStatus),
-                          tabs:
-                              VisitorStatus.values.map((c) => c.value).toList(),
-                          callback: (int value) =>
-                              cubit.setSelectedStatus(value),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: ExpandedToggleButtons(
+                            currentIndex: VisitorStatus.values
+                                .indexOf(cubit.selectedVisitorStatus),
+                            tabs: VisitorStatus.values
+                                .map((c) => c.value)
+                                .toList(),
+                            callback: (int value) =>
+                                cubit.setSelectedStatus(value),
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 16),
-                      Expanded(
-                        child: cubit.selectedVisitorStatus ==
-                                VisitorStatus.inQueue
-                            ? cubit.filteredVisitors.isNotEmpty
-                                ? CarouselView(
-                                    backgroundColor: Colors.transparent,
-                                    itemExtent: context.screenWidth,
-                                    shrinkExtent: context.screenWidth,
-                                    scrollDirection: Axis.horizontal,
-                                    children: cubit.filteredVisitors
-                                        .asMap()
-                                        .entries
-                                        .map((entry) {
-                                      int index =
-                                          entry.key; // The index of the visitor
-                                      var visitor =
-                                          entry.value; // The visitor object
+                        const SizedBox(height: 16),
+                        Expanded(
+                          child: cubit.selectedVisitorStatus ==
+                                  VisitorStatus.inQueue
+                              ? cubit.filteredVisitors.isNotEmpty
+                                  ? CarouselView(
+                                      backgroundColor: Colors.transparent,
+                                      itemExtent: context.screenWidth,
+                                      shrinkExtent: context.screenWidth,
+                                      scrollDirection: Axis.horizontal,
+                                      children: cubit.filteredVisitors
+                                          .asMap()
+                                          .entries
+                                          .map((entry) {
+                                        int index = entry
+                                            .key; // The index of the visitor
+                                        var visitor =
+                                            entry.value; // The visitor object
 
-                                      return Column(
-                                        children: [
-                                          SwiperCard(visitor: visitor),
-                                          const Spacer(),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                '${index + 1} / ${cubit.filteredVisitors.length}',
+                                        return Column(
+                                          children: [
+                                            SwiperCard(visitor: visitor),
+                                            const Spacer(),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  '${index + 1} / ${cubit.filteredVisitors.length}',
+                                                  style: TextStyle(
+                                                    fontSize: context
+                                                        .titleSmall.fontSize,
+                                                    color: context.primary,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        );
+                                      }).toList(),
+                                    )
+                                  : Center(
+                                      child: Text(
+                                        'No visitors in the queue.',
+                                        style: TextStyle(
+                                          fontSize: context.bodyLarge.fontSize,
+                                          color: context.textColor1,
+                                        ),
+                                      ),
+                                    )
+                              : cubit.selectedVisitorStatus ==
+                                      VisitorStatus.applied
+                                  ? cubit.filteredVisitors.isNotEmpty
+                                      ? ListView.builder(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemCount:
+                                              cubit.filteredVisitors.length,
+                                          itemBuilder: (context, index) {
+                                            final visitor =
+                                                cubit.filteredVisitors[index];
+                                            return VisitorCard(
+                                              visitor: visitor,
+                                              isBookmarked: cubit.checkBookmark(
+                                                  visitor.id ?? ''),
+                                              toggleBookmark: () =>
+                                                  cubit.toggleBookmark(
+                                                context,
+                                                visitor.id ?? '',
+                                              ),
+                                            );
+                                          },
+                                        )
+                                      : Center(
+                                          child: Text(
+                                            'No visitors applied.',
+                                            style: TextStyle(
+                                              fontSize:
+                                                  context.bodyLarge.fontSize,
+                                              color: context.textColor1,
+                                            ),
+                                          ),
+                                        )
+                                  : cubit.selectedVisitorStatus ==
+                                          VisitorStatus.saved
+                                      ? cubit.filteredVisitors.isNotEmpty
+                                          ? ListView.builder(
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemCount:
+                                                  cubit.filteredVisitors.length,
+                                              itemBuilder: (context, index) {
+                                                final visitor = cubit
+                                                    .filteredVisitors[index];
+                                                return VisitorCard(
+                                                  visitor: visitor,
+                                                  isBookmarked:
+                                                      cubit.checkBookmark(
+                                                          visitor.id ?? ''),
+                                                  toggleBookmark: () =>
+                                                      cubit.toggleBookmark(
+                                                    context,
+                                                    visitor.id ?? '',
+                                                  ),
+                                                );
+                                              },
+                                            )
+                                          : Center(
+                                              child: Text(
+                                                'No visitors saved.',
                                                 style: TextStyle(
                                                   fontSize: context
-                                                      .titleSmall.fontSize,
-                                                  color: context.primary,
+                                                      .bodyLarge.fontSize,
+                                                  color: context.textColor1,
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ],
-                                      );
-                                    }).toList(),
-                                  )
-                                : Center(
-                                    child: Text(
-                                      'No visitors in the queue.',
-                                      style: TextStyle(
-                                        fontSize: context.bodyLarge.fontSize,
-                                        color: context.textColor1,
-                                      ),
-                                    ),
-                                  )
-                            : cubit.selectedVisitorStatus ==
-                                    VisitorStatus.applied
-                                ? cubit.filteredVisitors.isNotEmpty
-                                    ? ListView.builder(
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemCount:
-                                            cubit.filteredVisitors.length,
-                                        itemBuilder: (context, index) {
-                                          final visitor =
-                                              cubit.filteredVisitors[index];
-                                          return VisitorCard(
-                                            visitor: visitor,
-                                            isBookmarked: cubit.checkBookmark(
-                                                visitor.id ?? ''),
-                                            toggleBookmark: () =>
-                                                cubit.toggleBookmark(
-                                              context,
-                                              visitor.id ?? '',
-                                            ),
-                                          );
-                                        },
-                                      )
-                                    : Center(
-                                        child: Text(
-                                          'No visitors applied.',
-                                          style: TextStyle(
-                                            fontSize:
-                                                context.bodyLarge.fontSize,
-                                            color: context.textColor1,
-                                          ),
-                                        ),
-                                      )
-                                : cubit.selectedVisitorStatus ==
-                                        VisitorStatus.saved
-                                    ? cubit.filteredVisitors.isNotEmpty
-                                        ? ListView.builder(
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            itemCount:
-                                                cubit.filteredVisitors.length,
-                                            itemBuilder: (context, index) {
-                                              final visitor =
-                                                  cubit.filteredVisitors[index];
-                                              return VisitorCard(
-                                                visitor: visitor,
-                                                isBookmarked:
-                                                    cubit.checkBookmark(
-                                                        visitor.id ?? ''),
-                                                toggleBookmark: () =>
-                                                    cubit.toggleBookmark(
-                                                  context,
-                                                  visitor.id ?? '',
-                                                ),
-                                              );
-                                            },
-                                          )
-                                        : Center(
-                                            child: Text(
-                                              'No visitors saved.',
-                                              style: TextStyle(
-                                                fontSize:
-                                                    context.bodyLarge.fontSize,
-                                                color: context.textColor1,
-                                              ),
-                                            ),
-                                          )
-                                    : Container(),
-                      ),
-                      cubit.selectedVisitorStatus == VisitorStatus.inQueue
-                          ? Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: PrimaryBtn(
-                                          callback: () =>
-                                              cubit.navigateToVisitorDetails(
-                                                  context),
-                                          title: "Start")),
-                                ],
-                              ),
-                            )
-                          : const Text("")
-                    ],
+                                            )
+                                      : Container(),
+                        ),
+                        cubit.selectedVisitorStatus == VisitorStatus.inQueue
+                            ? Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: PrimaryBtn(
+                                            callback: () =>
+                                                cubit.navigateToVisitorDetails(
+                                                    context),
+                                            title: "Start")),
+                                  ],
+                                ),
+                              )
+                            : const Text("")
+                      ],
+                    ),
                   );
                 },
               ),

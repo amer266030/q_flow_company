@@ -22,8 +22,8 @@ class SwiperCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              width: context.screenWidth * 0.5,
-              height: context.screenWidth * 0.5,
+              width: context.screenWidth * 0.4,
+              height: context.screenWidth * 0.4,
               child: AspectRatio(
                 aspectRatio: 1,
                 child: ClipOval(

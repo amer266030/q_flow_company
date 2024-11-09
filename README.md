@@ -2,7 +2,7 @@
 
 QFlow (Company) is a Flutter-based application developed to streamline the visitor experience at job fairs hosted by Tuwaiq Academy. It addresses challenges such as long queue wait times, access to company information, and the need to carry multiple CV copies. This fully functional app allows visitors to browse company details, join queues, receive real-time notifications, and rate or save companies for later, providing a more efficient and seamless event experience.
 
-![App Clip](q_flow_visitor.gif)
+![App Clip](q_flow_company.gif)
 
 ## Table of Contents
 

@@ -1,6 +1,6 @@
-# QFlow
+# QFlow (Company)
 
-QFlow is a Flutter-based application developed to streamline the visitor experience at job fairs hosted by Tuwaiq Academy. It addresses challenges such as long queue wait times, access to company information, and the need to carry multiple CV copies. This fully functional app allows visitors to browse company details, join queues, receive real-time notifications, and rate or save companies for later, providing a more efficient and seamless event experience.
+QFlow (Company) is a Flutter-based application developed to streamline the visitor experience at job fairs hosted by Tuwaiq Academy. It addresses challenges such as long queue wait times, access to company information, and the need to carry multiple CV copies. This fully functional app allows visitors to browse company details, join queues, receive real-time notifications, and rate or save companies for later, providing a more efficient and seamless event experience.
 
 ![App Clip](q_flow_visitor.gif)
 
@@ -132,5 +132,5 @@ The QFlow Company App offers recruiters a robust toolset for managing job fair i
 
 **Abdullah Alshammari**
 - [Portfolio](https://bind.link/@abdullah-al-shammari)
-- [Resume](https://amer266030.github.io/assets/pdf/Amer_CV.pdf)
+- [Resume](https://www.dropbox.com/scl/fi/usjo2vcuarjhqaulu226e/Abdullah_Alshammari_CV.pdf?rlkey=k297kmstimne5g017fdm9bdkd&st=jwe6dwpc&dl=0)
 - [LinkedIn](https://www.linkedin.com/in/abumukhlef)
